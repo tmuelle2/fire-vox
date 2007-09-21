@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+
+
+<!-- Copyright (C) 2005
+//CLC-4-TTS Firefox Extension - Fire Vox
+//Based on Core Library Components for Text-To-Speech for Firefox
+//An extension that turns Firefox into a talking browser by using the CLC-4-TTS suite as its foundation.
+//by Charles L. Chen
+
+ 
+//This program is free software; you can redistribute it
+//and/or modify it under the terms of the GNU General Public
+//License as published by the Free Software Foundation;
+//either version 2.1 of the License, or (at your option) any
+//later version.  This program is distributed in the hope
+//that it will be useful, but WITHOUT ANY WARRANTY; without
+//even the implied warranty of MERCHANTABILITY or FITNESS FOR
+//A PARTICULAR PURPOSE. See the GNU General Public License for
+//more details.  You should have received a copy of the GNU
+//General Public License along with this program; if not, look
+//on the web at on the web at http://www.gnu.org/copyleft/gpl.html
+//or write to the Free Software Foundation, Inc., 59 Temple Place,
+//Suite 330, Boston, MA 02111-1307, USA.
+ 
+
+//Last Modified Date 1/28/2005
+-->
+
+<overlay id="clc_firevoxOverlay"
+	 xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_currentAtomicObjAdjust.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_eventAnnouncer.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_globals.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_interface.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_misc.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_windowAdjust.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_keyEcho.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_autoRead.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_commonDialog.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_popUpMenu.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_preferences.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_hotkeyHandler.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_TTSEngineConfig.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_spCSSFunc.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_mouseclickHandler.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_sentenceReading.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_optionsDialog.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_DOMMutationAnnouncer.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_chatzillaFunctions.js" />
+
+
+  <script type="application/x-javascript">
+      window.addEventListener("pageshow",CLC_SR_Init,true);         // initializes the screen reader
+      window.document.addEventListener("load",CLC_SR_PageInit,true);       //initializes the page
+      window.addEventListener("close",CLC_SR_StopSpeaking,true); //stop speaking when moving on
+  </script>
+
+
+
+  <popupset id="mainPopupSet">
+
+<!--
+///////////////////////////////////////////////////////////
+//List of Elements
+///////////////////////////////////////////////////////////
+-->
+     <popup id="CLC_SR_PopUpMenu_00" onpopupshowing=  "CLC_SR_SetBrowserWindow();"
+          onpopuphidden="CLC_SR_ResetBrowserWindow();"> 
+
+        <menu id="headings" label="Headings" accesskey="H">
+
+           <menupopup
+              onpopupshowing=  "CLC_SR_GatherPopUpMenuContents('HEADINGS'); CLC_SR_CreatePopUpMenu(event);"
+
+
+              oncommand="CLC_SR_PopUpTarg = event.target.value; window.setTimeout('CLC_SR_GoToAndRead(CLC_SR_PopUpTarg);',10);"/>
+        </menu>
+
+        <menu id="links"  label="Links" accesskey="L">
+
+           <menupopup  
+
+              onpopupshowing=  "CLC_SR_GatherPopUpMenuContents('LINKS'); CLC_SR_CreatePopUpMenu(event);"
+
+
+              oncommand="CLC_SR_PopUpTarg = event.target.value; window.setTimeout('CLC_SR_GoToAndRead(CLC_SR_PopUpTarg);',10);"/>
+        </menu>
+
+        <menu id="images"  label="Images" accesskey="I">
+
+           <menupopup  
+
+              onpopupshowing=  "CLC_SR_GatherPopUpMenuContents('IMAGES'); CLC_SR_CreatePopUpMenu(event);"
+
+
+              oncommand="CLC_SR_PopUpTarg = event.target.value; window.setTimeout('CLC_SR_GoToAndRead(CLC_SR_PopUpTarg);',10);"/>
+        </menu>
+
+        <menu id="formelements"  label="Form Elements" accesskey="F">
+
+           <menupopup  
+
+              onpopupshowing=  "CLC_SR_GatherPopUpMenuContents('FORMELEMENTS'); CLC_SR_CreatePopUpMenu(event);"
+
+
+              oncommand="CLC_SR_PopUpTarg = event.target.value; window.setTimeout('CLC_SR_GoToAndRead(CLC_SR_PopUpTarg);',10);"/>
+        </menu>
+
+        <menu id="accesskeys"  label="Access Keys" accesskey="A">
+
+           <menupopup  
+
+              onpopupshowing=  "CLC_SR_GatherPopUpMenuContents('ACCESSKEYS'); CLC_SR_CreatePopUpMenu(event);"
+
+
+              oncommand="CLC_SR_PopUpTarg = event.target.value; window.setTimeout('CLC_SR_GoToAndRead(CLC_SR_PopUpTarg);',10);"/>
+        </menu>
+
+
+        <menu id="frames"  label="Frames" accesskey="F">
+
+           <menupopup  
+
+              onpopupshowing=  "CLC_SR_GatherPopUpMenuContents('FRAMES'); CLC_SR_CreatePopUpMenu(event);"
+
+
+              oncommand="CLC_SR_PopUpTarg = event.target.value; window.setTimeout('CLC_SR_SwitchFocusedFrame(CLC_SR_PopUpTarg);',10);"/>
+        </menu>
+
+     </popup> 
+
+
+
+<!--
+///////////////////////////////////////////////////////////
+//List of Headings
+///////////////////////////////////////////////////////////
+-->
+     <popup id="CLC_SR_PopUpMenu_01" onpopupshowing=  "CLC_SR_SetBrowserWindow();"
+          onpopuphidden="CLC_SR_ResetBrowserWindow();"> 
+
+        <menu id="h1" label="Level 1" accesskey="1">
+
+           <menupopup
+              onpopupshowing=  "CLC_SR_GatherPopUpMenuContents('h1'); CLC_SR_CreatePopUpMenu(event);"
+
+
+              oncommand="CLC_SR_PopUpTarg = event.target.value; window.setTimeout('CLC_SR_GoToAndRead(CLC_SR_PopUpTarg);',10);"/>
+        </menu>
+
+        <menu id="h2" label="Level 2" accesskey="2">
+
+           <menupopup
+              onpopupshowing=  "CLC_SR_GatherPopUpMenuContents('h2'); CLC_SR_CreatePopUpMenu(event);"
+
+
+              oncommand="CLC_SR_PopUpTarg = event.target.value; window.setTimeout('CLC_SR_GoToAndRead(CLC_SR_PopUpTarg);',10);"/>
+        </menu>
+
+        <menu id="h3" label="Level 3" accesskey="3">
+
+           <menupopup
+              onpopupshowing=  "CLC_SR_GatherPopUpMenuContents('h3'); CLC_SR_CreatePopUpMenu(event);"
+
+
+              oncommand="CLC_SR_PopUpTarg = event.target.value; window.setTimeout('CLC_SR_GoToAndRead(CLC_SR_PopUpTarg);',10);"/>
+        </menu>
+
+        <menu id="h4" label="Level 4" accesskey="4">
+
+           <menupopup
+              onpopupshowing=  "CLC_SR_GatherPopUpMenuContents('h4'); CLC_SR_CreatePopUpMenu(event);"
+
+
+              oncommand="CLC_SR_PopUpTarg = event.target.value; window.setTimeout('CLC_SR_GoToAndRead(CLC_SR_PopUpTarg);',10);"/>
+        </menu>
+
+        <menu id="h5" label="Level 5" accesskey="5">
+
+           <menupopup
+              onpopupshowing=  "CLC_SR_GatherPopUpMenuContents('h5'); CLC_SR_CreatePopUpMenu(event);"
+
+
+              oncommand="CLC_SR_PopUpTarg = event.target.value; window.setTimeout('CLC_SR_GoToAndRead(CLC_SR_PopUpTarg);',10);"/>
+        </menu>
+
+        <menu id="h6" label="Level 6" accesskey="6">
+
+           <menupopup
+              onpopupshowing=  "CLC_SR_GatherPopUpMenuContents('h6'); CLC_SR_CreatePopUpMenu(event);"
+
+
+              oncommand="CLC_SR_PopUpTarg = event.target.value; window.setTimeout('CLC_SR_GoToAndRead(CLC_SR_PopUpTarg);',10);"/>
+        </menu>
+
+     </popup> 
+
+
+  </popupset>
+
+
+  <menupopup id="menu_ToolsPopup">
+    <menuitem label="Fire Vox Options" 
+       oncommand="window.openDialog('chrome://clc_firevox/content/clc_firevox_pref_ui.xul','FireVoxPrefsDialog','centerscreen, chrome, resizable').focus();"
+       accesskey="F" />
+
+    <menu id="menu_FireVoxTTS" label="Fire Vox TTS Selection">
+        <menupopup id="menu_FireVoxTTS_popup">
+          <menuitem checked="false" id="menu_FireVoxTTS_popup_SAPI5" label="Use SAPI 5 (Windows only)" 
+             type="checkbox" name="FireVoxTTS_SelectedSynth"
+             oncommand="CLC_SR_StartSAPITTS();" accesskey="S" />
+          <menuitem checked="false" id="menu_FireVoxTTS_popup_FreeTTS" label="Use FreeTTS (Java based TTS)" 
+             type="checkbox" name="FireVoxTTS_SelectedSynth"
+             oncommand="CLC_SR_StartFreeTTS();" accesskey="F" />
+          <menuitem checked="false" id="menu_FireVoxTTS_popup_Orca" label="Use Orca (Linux, local server TTS)" 
+             type="checkbox" name="FireVoxTTS_SelectedSynth"
+             oncommand="CLC_SR_StartOrca();" accesskey="O" />
+        </menupopup>
+    </menu>
+
+  </menupopup>
+
+
+
+
+
+</overlay>
