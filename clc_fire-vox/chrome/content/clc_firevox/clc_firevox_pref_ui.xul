@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://communicator/skin/" type="text/css"?>
+
+<dialog
+   id="FireVoxPrefDialog"
+   buttons=" "
+   onload="CLC_SR_PrefUI_Load();"
+   onunload="CLC_SR_PrefUI_Save();"
+   title="Fire Vox Preferences" width="350" height="500" persist="width, height"
+   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" >
+	 
+   <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts.js" />
+   <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_freetts_fix.js" />
+   <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_sapi5_fix.js" />
+   <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_using_properties.js" />
+   <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_globals.js" />
+   <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_preferences.js" />
+   <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_prefUI.js" />
+   <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_prefUI_events.js" />
+   <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_TTSEngineConfig.js" />
+
+   <vbox flex="1" style="overflow: auto;">
+
+   <groupbox>
+      <caption label="Options"/>
+      <vbox flex="1" align="start">
+         <hbox align="center" pack="start">
+
+            <checkbox label="Read By Sentences" checked="true" id="firevoxpref-readBySentences-checkbox" 
+                onfocus="CLC_SR_SpeakPrefUI_CheckboxFocus('firevoxpref-readBySentences-checkbox')" />
+ 
+            <checkbox label="Select Current Sentence" checked="true" id="firevoxpref-selectSentence-checkbox" 
+                onfocus="CLC_SR_SpeakPrefUI_CheckboxFocus('firevoxpref-selectSentence-checkbox')" />
+         </hbox>
+         <hbox align="center" pack="start">
+
+            <checkbox label="Highlight Chunks" checked="true" id="firevoxpref-highlight-checkbox" 
+                onfocus="CLC_SR_SpeakPrefUI_CheckboxFocus('firevoxpref-highlight-checkbox')" />
+ 
+            <checkbox label="Speak Events" checked="true" id="firevoxpref-speakEvents-checkbox" 
+                onfocus="CLC_SR_SpeakPrefUI_CheckboxFocus('firevoxpref-speakEvents-checkbox')" />
+         </hbox>
+         <hbox align="center" pack="start"> 
+
+            <checkbox label="Echo Keys" checked="true" id="firevoxpref-echoKeys-checkbox" 
+                onfocus="CLC_SR_SpeakPrefUI_CheckboxFocus('firevoxpref-echoKeys-checkbox')" />
+
+            <checkbox label="Sort Lists Alphabetically" checked="true" id="firevoxpref-sortAlpha-checkbox" 
+                onfocus="CLC_SR_SpeakPrefUI_CheckboxFocus('firevoxpref-sortAlpha-checkbox')" />
+
+         </hbox>
+         <hbox align="center" pack="start"> 
+
+            <checkbox label="Verbose Form Elements List" checked="true" id="firevoxpref-verboseFormElemList-checkbox" 
+                onfocus="CLC_SR_SpeakPrefUI_CheckboxFocus('firevoxpref-verboseFormElemList-checkbox')" />
+
+            <checkbox label="Adjust window on HTML element focused" checked="true" id="firevoxpref-adjustOnFocus-checkbox" 
+                onfocus="CLC_SR_SpeakPrefUI_CheckboxFocus('firevoxpref-adjustOnFocus-checkbox')" />
+         </hbox>
+         <hbox align="center" pack="start"> 
+
+            <checkbox label="Use CSS Speech Properties" checked="true" id="firevoxpref-useCSSSpeechProperties-checkbox" 
+                onfocus="CLC_SR_SpeakPrefUI_CheckboxFocus('firevoxpref-useCSSSpeechProperties-checkbox')" />
+
+            <checkbox label="Auto detect language" checked="true" id="firevoxpref-autodetectLang-checkbox" 
+                onfocus="CLC_SR_SpeakPrefUI_CheckboxFocus('firevoxpref-autodetectLang-checkbox')" />
+
+         </hbox>
+         <hbox align="center" pack="start"> 
+
+            <checkbox label="Use Pause/Break as sticky modifier" checked="true" id="firevoxpref-useStickyMod-checkbox" 
+                onfocus="CLC_SR_SpeakPrefUI_CheckboxFocus('firevoxpref-useStickyMod-checkbox')" />
+
+
+
+         </hbox>
+
+      </vbox>
+   </groupbox>
+
+   <groupbox>
+      <caption label="Keys"/>
+      <vbox style="min-width: 100px;" flex="1" align="start">
+
+         <label control="firevoxpref-keys-ReadBackward" value="Read Previous" />
+         <textbox id="firevoxpref-keys-ReadBackward" maxlength="1" value="D" 
+             onfocus="CLC_SR_SpeakPrefUI_TextboxFocus('firevoxpref-keys-ReadBackward')" />
+
+         <label control="firevoxpref-keys-ReadForward" value="Read Next" />
+         <textbox id="firevoxpref-keys-ReadForward" maxlength="1" value="F" 
+             onfocus="CLC_SR_SpeakPrefUI_TextboxFocus('firevoxpref-keys-ReadForward')" />
+
+         <label control="firevoxpref-keys-Repeat" value="Repeat" />
+         <textbox id="firevoxpref-keys-Repeat" maxlength="1" value="E" 
+             onfocus="CLC_SR_SpeakPrefUI_TextboxFocus('firevoxpref-keys-Repeat')" />
+
+         <label control="firevoxpref-keys-StopSpeaking" value="Stop Speaking" />
+         <textbox id="firevoxpref-keys-StopSpeaking" maxlength="1" value="C" 
+             onfocus="CLC_SR_SpeakPrefUI_TextboxFocus('firevoxpref-keys-StopSpeaking')" />
+
+         <label control="firevoxpref-keys-SaySelected" value="Say Selected Text" />
+         <textbox id="firevoxpref-keys-SaySelected" maxlength="1" value="O"
+             onfocus="CLC_SR_SpeakPrefUI_TextboxFocus('firevoxpref-keys-SaySelected')" />
+
+         <label control="firevoxpref-keys-GetMoreInfo" value="Query for More Information" />
+         <textbox id="firevoxpref-keys-GetMoreInfo" maxlength="1" value="Q"
+             onfocus="CLC_SR_SpeakPrefUI_TextboxFocus('firevoxpref-keys-GetMoreInfo')" />
+
+         <label control="firevoxpref-keys-SpellOut" value="Spell Out" />
+         <textbox id="firevoxpref-keys-SpellOut" maxlength="1" value="S"
+             onfocus="CLC_SR_SpeakPrefUI_TextboxFocus('firevoxpref-keys-SpellOut')" />
+
+         <label control="firevoxpref-keys-LaunchAutoReader" value="Auto Read" />
+         <textbox id="firevoxpref-keys-LaunchAutoReader" maxlength="1" value="A"
+             onfocus="CLC_SR_SpeakPrefUI_TextboxFocus('firevoxpref-keys-LaunchAutoReader')" />
+
+         <label control="firevoxpref-keys-ReadCurrentPosition" value="Read Current Position" />
+         <textbox id="firevoxpref-keys-ReadCurrentPosition" maxlength="1" value="P"
+             onfocus="CLC_SR_SpeakPrefUI_TextboxFocus('firevoxpref-keys-ReadCurrentPosition')" />
+
+         <label control="firevoxpref-keys-HeadingsList" value="List of Headings" />
+         <textbox id="firevoxpref-keys-HeadingsList" maxlength="1" value="H"
+             onfocus="CLC_SR_SpeakPrefUI_TextboxFocus('firevoxpref-keys-HeadingsList')" />
+
+         <label control="firevoxpref-keys-ElementsList" value="List of Elements" />
+         <textbox id="firevoxpref-keys-ElementsList" maxlength="1" value="L"
+             onfocus="CLC_SR_SpeakPrefUI_TextboxFocus('firevoxpref-keys-ElementsList')" />
+
+         <label control="firevoxpref-keys-FireVoxOptionsMenu" value="Fire Vox Options Menu" />
+         <textbox id="firevoxpref-keys-FireVoxOptionsMenu" maxlength="1" value="M"
+             onfocus="CLC_SR_SpeakPrefUI_TextboxFocus('firevoxpref-keys-FireVoxOptionsMenu')" />
+
+         <label control="firevoxpref-keys-SayParentTextContent" value="Say Parent Node Text Content" />
+         <textbox id="firevoxpref-keys-SayParentTextContent" maxlength="1" value="U"
+             onfocus="CLC_SR_SpeakPrefUI_TextboxFocus('firevoxpref-keys-SayParentTextContent')" />
+
+         <label control="firevoxpref-keys-ToggleDOMMutationEventAnnouncements" value="Toggle Live Region Announcements" />
+         <textbox id="firevoxpref-keys-ToggleDOMMutationEventAnnouncements" maxlength="1" value="Y"
+             onfocus="CLC_SR_SpeakPrefUI_TextboxFocus('firevoxpref-keys-ToggleDOMMutationEventAnnouncements')" />
+			
+
+         </vbox>
+   </groupbox>
+
+		
+      <hbox align="center" pack="start">
+
+         <button label="OK" id="firevoxpref-ok-button" oncommand="self.close();"
+             onfocus="CLC_SR_SpeakPrefUI_ButtonFocus('firevoxpref-ok-button')" />
+ 
+         <button label="Cancel" id="firevoxpref-cancel-button" oncommand="CLC_SR_ShouldSavePrefs = false; self.close();"
+             onfocus="CLC_SR_SpeakPrefUI_ButtonFocus('firevoxpref-cancel-button')" />
+
+      </hbox>
+
+   </vbox>
+</dialog>

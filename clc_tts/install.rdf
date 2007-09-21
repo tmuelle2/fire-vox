@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+
+<!-- Copyright (C) 2005
+//CLC-4-TTS Firefox Extension:
+//Core Library Components for Text-To-Speech for Firefox
+//by Charles L. Chen
+
+ 
+//This program is free software; you can redistribute it
+//and/or modify it under the terms of the GNU General Public
+//License as published by the Free Software Foundation;
+//either version 2.1 of the License, or (at your option) any
+//later version.  This program is distributed in the hope
+//that it will be useful, but WITHOUT ANY WARRANTY; without
+//even the implied warranty of MERCHANTABILITY or FITNESS FOR
+//A PARTICULAR PURPOSE. See the GNU General Public License for
+//more details.  You should have received a copy of the GNU
+//General Public License along with this program; if not, look
+//on the web at on the web at http://www.gnu.org/copyleft/gpl.html
+//or write to the Free Software Foundation, Inc., 59 Temple Place,
+//Suite 330, Boston, MA 02111-1307, USA.
+ 
+
+//Last Modified Date 4/2/2007
+-->
+
+
+	<Description about="urn:mozilla:install-manifest">
+
+		<em:id>{7529D455-3392-4a17-A489-0C737D1DBAC0}</em:id>
+		<em:name>CLC-4-TTS</em:name>
+		<em:version>3.1</em:version>
+		<em:description>Core Library Components for Text-To-Speech</em:description>
+		<em:creator>Charles L. Chen</em:creator>
+		<em:homepageURL>http://clcworld.net</em:homepageURL>
+		<em:file>
+			<Description about="urn:mozilla:extension:file:clc_tts.jar">
+				<em:package>content/clc_tts/</em:package>
+			</Description>
+		</em:file>
+
+		<em:targetApplication>
+			<Description>
+				<em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+				<em:minVersion>1.5</em:minVersion>
+				<em:maxVersion>2.*</em:maxVersion>
+			</Description>
+		</em:targetApplication>
+
+	</Description>
+
+</RDF>
