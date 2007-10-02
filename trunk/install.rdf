@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:NC="http://home.netscape.com/NC-rdf#"
+     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+
+
+<!-- Copyright (C) 2005
+//CLC-4-TTS Fire Vox Bundle Pack:
+//All Components Needed for Fire Vox
+//by Charles L. Chen
+
+ 
+//This program is free software; you can redistribute it
+//and/or modify it under the terms of the GNU General Public
+//License as published by the Free Software Foundation;
+//either version 2.1 of the License, or (at your option) any
+//later version.  This program is distributed in the hope
+//that it will be useful, but WITHOUT ANY WARRANTY; without
+//even the implied warranty of MERCHANTABILITY or FITNESS FOR
+//A PARTICULAR PURPOSE. See the GNU General Public License for
+//more details.  You should have received a copy of the GNU
+//General Public License along with this program; if not, look
+//on the web at on the web at http://www.gnu.org/copyleft/gpl.html
+//or write to the Free Software Foundation, Inc., 59 Temple Place,
+//Suite 330, Boston, MA 02111-1307, USA.
+ 
+
+//Last Modified Date 8/29/2007
+-->
+
+
+  <Description about="urn:mozilla:install-manifest">
+    <!-- nsIUpdateItem type for a Multiple Item Package -->
+    <em:type NC:parseType="Integer">32</em:type>
+
+		<em:id>clc@clcworld.net</em:id>
+		<em:name>CLC-4-TTS Suite</em:name>
+		<em:version>3.3</em:version>
+		<em:description>CLC-4-TTS Suite Bundle Pack</em:description>
+		<em:creator>Charles L. Chen</em:creator>
+		<em:homepageURL>http://clcworld.net</em:homepageURL>
+
+
+		<em:targetApplication>
+			<Description>
+				<em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+				<em:minVersion>1.5</em:minVersion>
+				<em:maxVersion>2.*</em:maxVersion>
+			</Description>
+		</em:targetApplication>
+
+	</Description>
+
+</RDF>
