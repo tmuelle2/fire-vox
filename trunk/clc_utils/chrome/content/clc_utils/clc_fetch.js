@@ -1,4 +1,3 @@
-//Copyright (C) 2005
 //CLC-4-TTS Firefox Extension
 //Core Library Components for Text-To-Speech for Firefox
 //Additional Utility Functions: DOM Object Fetching Functions
@@ -20,7 +19,7 @@
 //Suite 330, Boston, MA 02111-1307, USA.
  
 
-//Last Modified Date 2/19/2005
+//Last Modified Date 10/06/2007
 
 //NOTE on "Atomic" Objects:
 //An atomic object is an object which cannot
@@ -616,8 +615,8 @@ function CLC_GetAssociatedLabels(targObj){
   if (targObj.hasAttributeNS && targObj.hasAttributeNS("http://www.w3.org/2005/07/aaa", "labelledby")){
      labelIDsString = targObj.getAttributeNS("http://www.w3.org/2005/07/aaa", "labelledby");
      }
-  if (!labelIDsString && targObj.hasAttribute && targObj.hasAttribute("aaa:labelledby")){
-    labelIDsString = targObj.getAttribute("aaa:labelledby");
+  if (!labelIDsString && targObj.hasAttribute && targObj.hasAttribute("aria-labelledby")){
+    labelIDsString = targObj.getAttribute("aria-labelledby");
     }
   if (!labelIDsString){
     return labelArray;
@@ -646,8 +645,8 @@ function CLC_GetAssociatedDescriptions(targObj){
   if (targObj.hasAttributeNS && targObj.hasAttributeNS("http://www.w3.org/2005/07/aaa", "describedby")){
      descriptionIDsString = targObj.getAttributeNS("http://www.w3.org/2005/07/aaa", "describedby");
      }
-  if (!descriptionIDsString && targObj.hasAttribute && targObj.hasAttribute("aaa:describedby")){
-    descriptionIDsString = targObj.getAttribute("aaa:describedby");
+  if (!descriptionIDsString && targObj.hasAttribute && targObj.hasAttribute("aria-describedby")){
+    descriptionIDsString = targObj.getAttribute("aria-describedby");
     }
   if (!descriptionIDsString){
     return descriptionArray;

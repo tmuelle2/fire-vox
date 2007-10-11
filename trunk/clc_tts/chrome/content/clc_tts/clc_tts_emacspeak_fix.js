@@ -1,8 +1,6 @@
-<?xml version="1.0"?>
-
-<!-- Copyright (C) 2005
 //CLC-4-TTS Firefox Extension:
 //Core Library Components for Text-To-Speech for Firefox
+//Special functions for dealing with Emacspeak quirks
 //by Charles L. Chen
 
  
@@ -21,17 +19,25 @@
 //Suite 330, Boston, MA 02111-1307, USA.
  
 
-//Last Modified Date 6/2/2005
--->
+//Last Modified Date 10/06/2007
 
-<overlay id="clc_ttsOverlay"
-	 xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  
-  <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts.js" />
-  <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_sapi5_fix.js" />
-  <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_freetts_fix.js" />
-  <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_using_properties.js" />
-  <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_orca_fix.js" />
-  <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_emacspeak_fix.js" />
 
-</overlay>
+//------------------------------------------
+//Must prep the OrcaServer before anything can be done.
+//
+function CLC_Emacspeak_Prep(){
+   CLC_Emacspeak_CleanUp();
+   CLC_EMACSPEAK_OBJ = new XMLHttpRequest();
+   CLC_EMACSPEAK_OBJ.overrideMimeType('text/xml');
+   CLC_EMACSPEAK_OBJ.open('POST', CLC_EMACSPEAK_URL, true);
+   CLC_EMACSPEAK_OBJ.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+   }
+
+
+
+function CLC_Emacspeak_CleanUp(){   
+   if (CLC_EMACSPEAK_OBJ && CLC_EMACSPEAK_OBJ.abort){
+      CLC_EMACSPEAK_OBJ.abort();
+      CLC_EMACSPEAK_OBJ = "";
+      }
+   }
