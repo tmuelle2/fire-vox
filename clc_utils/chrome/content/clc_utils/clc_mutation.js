@@ -1,4 +1,3 @@
-//Copyright (C) 2005
 //CLC-4-TTS Firefox Extension
 //Core Library Components for Text-To-Speech for Firefox
 //Additional Utility Functions: Mutation Events System
@@ -20,7 +19,7 @@
 //Suite 330, Boston, MA 02111-1307, USA.
  
 
-//Last Modified Date 5/06/2007
+//Last Modified Date 10/06/2007
 
 //------------------------------------------
 //
@@ -211,18 +210,18 @@ function CLC_MutationHandler(event,theType){
       }
    var isBusy = CLC_GetClosestNSAttributeOf(event.target, "http://www.w3.org/2005/07/aaa", "busy");
    if (!isBusy){
-      isBusy = CLC_GetClosestAttributeOf(event.target, "aaa:busy");
+      isBusy = CLC_GetClosestAttributeOf(event.target, "aria-busy");
       }
    if (isBusy && isBusy.toLowerCase && (isBusy.toLowerCase() == "true")){
       return;
       }
    currentEventObj.politeness = CLC_GetClosestNSAttributeOf(event.target, "http://www.w3.org/2005/07/aaa", "live");
    if (!currentEventObj.politeness){
-      currentEventObj.politeness = CLC_GetClosestAttributeOf(event.target, "aaa:live");
+      currentEventObj.politeness = CLC_GetClosestAttributeOf(event.target, "aria-live");
       }
    var isAtomic = CLC_GetClosestNSAttributeOf(event.target, "http://www.w3.org/2005/07/aaa", "atomic");
    if (!isAtomic){
-      isAtomic = CLC_GetClosestAttributeOf(event.target, "aaa:atomic");
+      isAtomic = CLC_GetClosestAttributeOf(event.target, "aria-atomic");
       }
    if (isAtomic && isAtomic.toLowerCase && (isAtomic.toLowerCase() == "true")){
       currentEventObj.atomic = true;
@@ -232,7 +231,7 @@ function CLC_MutationHandler(event,theType){
       }
    currentEventObj.relevant = CLC_GetClosestNSAttributeOf(event.target, "http://www.w3.org/2005/07/aaa", "relevant");
    if (!currentEventObj.relevant){
-      currentEventObj.relevant = CLC_GetClosestAttributeOf(event.target, "aaa:relevant");
+      currentEventObj.relevant = CLC_GetClosestAttributeOf(event.target, "aria-relevant");
       }
    if (currentEventObj.atomic){
       var targObj = event.target;
@@ -241,7 +240,7 @@ function CLC_MutationHandler(event,theType){
             this.atomicText = CLC_GetTextContent(targObj);
             break;
             }
-         if (targObj.hasAttribute && targObj.hasAttribute("aaa:atomic")){
+         if (targObj.hasAttribute && targObj.hasAttribute("aria-atomic")){
             this.atomicText = CLC_GetTextContent(targObj);
             break;
             }
@@ -250,7 +249,7 @@ function CLC_MutationHandler(event,theType){
       }
    var isNotification = CLC_GetClosestNSAttributeOf(event.target, "http://www.w3.org/2005/07/aaa", "channel");
    if (!isNotification){
-      isNotification = CLC_GetClosestAttributeOf(event.target, "aaa:channel");
+      isNotification = CLC_GetClosestAttributeOf(event.target, "aria-channel");
       }
    if (isNotification && isNotification.toLowerCase && (isNotification.toLowerCase() == "notify")){
       currentEventObj.notify = true;
@@ -633,7 +632,7 @@ function CLC_GetClosestAtomicLiveRegion(targObj){
   var isAtomic = false;
   var atomicStr = CLC_GetClosestNSAttributeOf(targObj, "http://www.w3.org/2005/07/aaa", "atomic");
   if (!atomicStr){
-     atomicStr = CLC_GetClosestAttributeOf(targObj, "aaa:atomic");
+     atomicStr = CLC_GetClosestAttributeOf(targObj, "aria-atomic");
      }
   if (atomicStr && atomicStr.toLowerCase && (atomicStr.toLowerCase() == "true")){
      isAtomic = true;
@@ -663,13 +662,13 @@ function CLC_GetClosestAtomicLiveRegion(targObj){
     if (targObj.hasAttribute){
       //Get the live region with the atomic property if the event is atomic
       if (isAtomic){
-        if (targObj.hasAttribute("aaa:atomic")){
+        if (targObj.hasAttribute("aria-atomic")){
           return targObj;
           }
         }
-      else if ( targObj.hasAttribute("aaa:live")   || 
-           targObj.hasAttribute("aaa:atomic") || 
-           targObj.hasAttribute("aaa:relevant")  ){
+      else if ( targObj.hasAttribute("aria-live")   || 
+           targObj.hasAttribute("aria-atomic") || 
+           targObj.hasAttribute("aria-relevant")  ){
         return targObj;
         }
       }

@@ -1,4 +1,3 @@
-//Copyright (C) 2005
 //CLC-4-TTS Firefox Extension:
 //Core Library Components for Text-To-Speech for Firefox
 //by Charles L. Chen
@@ -19,7 +18,7 @@
 //Suite 330, Boston, MA 02111-1307, USA.
  
 
-//Last Modified Date 4/2/2007
+//Last Modified Date 10/06/2007
 
 
 
@@ -49,6 +48,11 @@ var CLC_ORCA_OBJ;
 var CLC_ORCA_URL = "http://127.0.0.1:20433";
 var CLC_ORCA_CheckingReadyStatus = false;
 
+var CLC_EMACSPEAK_OBJ;
+var CLC_EMACSPEAK_URL = "http://127.0.0.1:20533";
+var CLC_EMACSPEAK_CheckingReadyStatus = false;
+
+
 //------------------------------------------
 
 //The Text-To-Speech engine that will be used is determined by "engine."
@@ -57,6 +61,7 @@ var CLC_ORCA_CheckingReadyStatus = false;
 //   1 = SAPI 5 Engine
 //   2 = FreeTTS (Java based TTS)
 //   3 = Orca (Linux only, HTTPRequest TTS)
+//   4 = Emacspeak (Linux only, HTTPRequest TTS)
 //
 //
 //Returns true if initialized successfully; otherwise false.
@@ -123,6 +128,27 @@ function CLC_Init(engine) {
         CLC_TTS_ENGINE = 3;
         return true;
         }
+   if (engine == 4){
+	try {
+                CLC_EMACSPEAK_CheckingReadyStatus = false;
+                CLC_Emacspeak_CleanUp();
+		CLC_EMACSPEAK_OBJ = new XMLHttpRequest();
+		CLC_EMACSPEAK_OBJ.overrideMimeType('text/xml');
+                //Use the false flag since we do not do this asynchronously.
+                //The goal here is to test for ORCA's existence... 
+                //There will be an exception thrown if it does not exist.
+		CLC_EMACSPEAK_OBJ.open('POST', CLC_EMACSPEAK_URL, false);
+		CLC_EMACSPEAK_OBJ.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		CLC_EMACSPEAK_OBJ.send(null); 
+	} catch (err) {
+        //Fail quietly to avoid a failure loop of error messages caused by trying to speak error alert boxes
+	//	alert(err);
+		return false;
+	}    
+        CLC_Make_TTS_History_Buffer(20);
+        CLC_TTS_ENGINE = 4;
+        return true;
+        }
    CLC_TTS_ENGINE = 0;
    return false;   
    }
@@ -187,6 +213,9 @@ function CLC_Ready() {
          }
       return false;
       }
+   if (CLC_TTS_ENGINE == 4){
+      return true; //Emacspeak cannot do "ready" reliably; always treat it as true for now.
+      }
    }
 
 //------------------------------------------
@@ -208,6 +237,11 @@ function CLC_Interrupt() {
    if (CLC_TTS_ENGINE == 3){
       CLC_Orca_Prep();
       CLC_ORCA_OBJ.send("stop"); 
+      return;
+      }
+   if (CLC_TTS_ENGINE == 4){
+      CLC_Emacspeak_Prep();
+      CLC_EMACSPEAK_OBJ.send("stop"); 
       return;
       }
    }
@@ -259,6 +293,11 @@ function CLC_Say(messagestring, pitch) {
       //Orca cannot do pitch, just ignore that for now
       CLC_Orca_Prep();
       CLC_ORCA_OBJ.send("speak: " + messagestring);     
+      }
+   if (CLC_TTS_ENGINE == 4){
+      //Emacspeak cannot do pitch, just ignore that for now
+      CLC_Emacspeak_Prep();
+      CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
       }
    }
 
@@ -312,6 +351,11 @@ function CLC_Read(contentobject, contentstring, pitch) {
       //Orca cannot do pitch, just ignore that for now
       CLC_Orca_Prep();
       CLC_ORCA_OBJ.send("speak: " + contentstring);     
+      }
+   if (CLC_TTS_ENGINE == 4){
+      //Emacspeak cannot do pitch, just ignore that for now
+      CLC_Emacspeak_Prep();
+      CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
       }
    for(var i = CLC_TTS_HISTORY_BUFFER_MAXSIZE; i > 1; i--){
       CLC_TTS_HISTORY_BUFFER[i-1] = CLC_TTS_HISTORY_BUFFER[i-2];
@@ -443,6 +487,11 @@ function CLC_Spell(messagestring, pitch) {
       CLC_Orca_Prep();
       CLC_ORCA_OBJ.send("speak: " + messagestring);     
       }
+   if (CLC_TTS_ENGINE == 4){
+      //Emacspeak cannot do pitch, just ignore that for now
+      CLC_Emacspeak_Prep();
+      CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
+      }
    }
 
 
@@ -496,6 +545,12 @@ function CLC_Shout(messagestring, pitch) {
       CLC_Interrupt();
       CLC_Orca_Prep();
       CLC_ORCA_OBJ.send("speak: " + messagestring);     
+      }
+   if (CLC_TTS_ENGINE == 4){
+      //Emacspeak cannot do pitch, just ignore that for now
+      CLC_Interrupt();
+      CLC_Emacspeak_Prep();
+      CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
       }
    }
 
@@ -553,6 +608,13 @@ function CLC_ShoutSpell(messagestring, pitch) {
       messagestring = CLC_FREETTS_InsertSpaces(messagestring);
       CLC_Orca_Prep();
       CLC_ORCA_OBJ.send("speak: " + messagestring);     
+      }
+   if (CLC_TTS_ENGINE == 4){
+      //Emacspeak cannot do pitch, just ignore that for now
+      CLC_Interrupt();
+      messagestring = CLC_FREETTS_InsertSpaces(messagestring);
+      CLC_Emacspeak_Prep();
+      CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
       }
    }
 

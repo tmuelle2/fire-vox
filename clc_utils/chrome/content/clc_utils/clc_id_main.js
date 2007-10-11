@@ -1,4 +1,3 @@
-//Copyright (C) 2005
 //CLC-4-TTS Firefox Extension
 //Core Library Components for Text-To-Speech for Firefox
 //Additional Utility Functions: Element Identification System - Main
@@ -20,7 +19,7 @@
 //Suite 330, Boston, MA 02111-1307, USA.
  
 
-//Last Modified Date 1/13/2005
+//Last Modified Date 10/06/2007
 
 //The main functions in this file refer to functions which
 //are defined in the subfunctions files for the ID system.
@@ -375,7 +374,7 @@ function CLC_Role_Menubar_Info1(target){
 
 
 function CLC_Role_Menuitem_Info1(target){
-  var haspopup = target.getAttributeNS("http://www.w3.org/2005/07/aaa", "haspopup");
+  var haspopup = target.getAttribute("aria-haspopup");
   if (haspopup == "true"){
     return "Menu with sub menus. ";
     }
@@ -409,8 +408,8 @@ function CLC_Role_Progressbar_Info1(target){
   }
 
 function CLC_Role_Treeitem_Info1(target){
-  if (target.hasAttributeNS && target.hasAttributeNS("http://www.w3.org/2005/07/aaa", "expanded")){
-    if (target.getAttributeNS("http://www.w3.org/2005/07/aaa", "expanded").toLowerCase() == "true"){
+  if (target.hasAttribute && target.hasAttribute("aria-expanded")){
+    if (target.getAttribute("aria-expanded").toLowerCase() == "true"){
       return "Expanded tree item. ";
       }
     return "Collapsed tree item. ";
@@ -450,7 +449,7 @@ function CLC_Role_Button_Info1(target){
 
 function CLC_Role_CheckboxTristate_Info1(target){
   var disabledStatusStr = "";
-  if (target.getAttributeNS("http://www.w3.org/2005/07/aaa", "disabled") == "true"){
+  if (target.getAttribute("aria-disabled") == "true"){
     disabledStatusStr = "Disabled ";
     }
   return disabledStatusStr + "Tristate check box. " 
