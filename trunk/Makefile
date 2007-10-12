@@ -9,4 +9,7 @@ clc-bundle.xpi:
 	mv clc_fire-vox/clc_fire-vox.xpi clc_fire-vox.xpi
 	mv clc_utils/clc_utils.xpi clc_utils.xpi
 	mv clc_tts/clc_tts.xpi clc_tts.xpi
-	zip -m clc-bundle.xpi clc_fire-vox.xpi clc_utils.xpi clc_tts.xpi install.rdf
+	zip clc-bundle.xpi clc_fire-vox.xpi clc_utils.xpi clc_tts.xpi install.rdf
+        rm clc_fire-vox.xpi 
+        rm clc_utils.xpi 
+        rm clc_tts.xpi 
