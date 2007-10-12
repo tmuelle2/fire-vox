@@ -1,4 +1,4 @@
-all: clc_fire-vox.jar
+all: clc_firevox.jar
 
-clc_fire-vox.jar:
-	jar cfv clc_fire-vox.jar content
+clc_firevox.jar:
+	jar cfv clc_firevox.jar content
