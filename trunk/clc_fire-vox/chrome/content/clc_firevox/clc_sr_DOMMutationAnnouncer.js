@@ -204,6 +204,10 @@ function CLC_SR_GenerateInfoForTableCellMutation(targetNode){
    if (!row_heading_text){
       row_heading_text = CLC_GuessRowHeading(targetNode);
       }
+   //Don't repeat the text of the target node itself
+   if ((col_heading_text == targetNode.textContent) || (row_heading_text == targetNode.textContent)){
+      return "";
+      }
    return (row_heading_text + " " + col_heading_text);
    }
 //-----------------------------------------------
@@ -332,4 +336,5 @@ function CLC_SR_SpeakMutation(){
    else {
       CLC_Read(currentMutationEvent.target,eventText, 0);
       }
+
    }
