@@ -17,12 +17,12 @@
 //and NOTHING will be said. Global buffer solves this problem.
 //
 function CLC_SR_Hotkey_Handler(event){
-   //User has done something; stop talking here immediately.
+   //User has done something; stop reading here immediately.
    //Also, reset the user activity level since the user actively tried to do something, 
    //and set the last spoken mutation type to null since the user could do something
    //which causes something which is not a live region to speak.
 
-   CLC_SR_StopSpeaking();
+   CLC_SR_Stop = true; 
 
    CLC_SR_UserActivityLevel = CLC_SR_MaxUserActivityLevel;
    CLC_SR_LastSpokenMutationType = "";
@@ -157,6 +157,7 @@ function CLC_SR_Hotkey_Handler(event){
 //Sets the event listener to catch keycodes that do not have keypress
 //
 function CLC_SR_KeycodeMonitor(event){   
+   //CTRL is commonly used to shut up screen readers
    if (event.keyCode == 17){
       window.setTimeout("CLC_SR_StopSpeaking();", 0);
       }
