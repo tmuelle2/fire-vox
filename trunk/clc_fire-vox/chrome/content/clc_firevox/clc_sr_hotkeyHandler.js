@@ -17,15 +17,15 @@
 //and NOTHING will be said. Global buffer solves this problem.
 //
 function CLC_SR_Hotkey_Handler(event){
-   var keypressed = String.fromCharCode(event.charCode);
-
-   //User has done something; stop the auto read here immediately just to be safe.
+   //User has done something; stop talking here immediately.
    //Also, reset the user activity level since the user actively tried to do something, 
    //and set the last spoken mutation type to null since the user could do something
    //which causes something which is not a live region to speak.
-   CLC_SR_Stop = true;
+   window.setTimeout("CLC_SR_StopSpeaking();", 0);
    CLC_SR_UserActivityLevel = CLC_SR_MaxUserActivityLevel;
    CLC_SR_LastSpokenMutationType = "";
+
+   var keypressed = String.fromCharCode(event.charCode);
 
    //Special case for page reload - clear CLC_SR_CurrentURI so that the page will start over.
    //Starting over means the page will be announced and the highlighting will be ok.
@@ -151,11 +151,21 @@ function CLC_SR_Hotkey_Handler(event){
    }
 
 
+//------------------------------------------
+//Sets the event listener to catch keycodes that do not have keypress
+//
+function CLC_SR_KeycodeMonitor(event){   
+   if (event.keyCode == 17){
+      window.setTimeout("CLC_SR_StopSpeaking();", 0);
+      }
+   }
+
 
 //------------------------------------------
 //Sets the event listener to catch keypress events
 //
 function CLC_SR_Hotkey_Init(){   
+   window.addEventListener("keydown", CLC_SR_KeycodeMonitor, false);
    window.addEventListener("keypress", CLC_SR_Hotkey_Handler, false);
    }
 
