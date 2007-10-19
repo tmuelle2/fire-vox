@@ -1,4 +1,5 @@
-//Copyright (C) 2005
+//Copyright 2007 Google Inc.
+//
 //CLC-4-TTS Firefox Extension
 //Core Library Components for Text-To-Speech for Firefox
 //Additional Utility Functions: Element Content System - Main
@@ -52,6 +53,9 @@ function CLC_GetTextContent(target){
   if (!target){
      return "";
      }
+  if (target.nodeType == 8){ //Ignore comment nodes
+     return "";
+     } 
   var textContentFromRole = CLC_GetTextContentFromRole(target);
   if (textContentFromRole){
     return textContentFromRole;
