@@ -98,9 +98,32 @@ function CLC_SR_SpeakHTMLFocusEvents_Init(){
    var framesArray = window._content.document.documentElement.getElementsByTagName("frame"); 
    for(i =0; i < framesArray.length; i++){
       framesArray[i].contentWindow.document.body.addEventListener("focus", CLC_SR_SpeakHTMLFocus_EventAnnouncer, true);
+      framesArray[i].contentWindow.document.body.addEventListener("DOMAttrModified", CLC_SR_BodyActiveDescendant_Announcer, false);
       }
    CLC_Window().document.body.addEventListener("focus", CLC_SR_SpeakHTMLFocus_EventAnnouncer, true);
+   CLC_Window().document.body.addEventListener("DOMAttrModified", CLC_SR_BodyActiveDescendant_Announcer, false);
    }
+
+//------------------------------------------
+//If a web page is using active descendant on the body, 
+//then that should be treated as the focused item and spoken.
+//
+function CLC_SR_BodyActiveDescendant_Announcer(event){
+   if (!CLC_SR_Query_SpeakEvents()){
+      return;
+      }
+   if ( CLC_SR_ActOnFocusedElements && (event.target.tagName.toLowerCase() == "body") 
+        && (event.attrName == "aria-activedescendant") && (event.newValue) ){
+      var targetNode = CLC_Window().document.getElementById(event.newValue);
+      CLC_SR_SpeakEventBuffer = CLC_GetTextContent(targetNode); 
+      window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0);", 10);
+      //CLC_SR_PrevAtomicObject = CLC_SR_CurrentAtomicObject;
+      //CLC_SR_CurrentAtomicObject = targetNode;
+      // CLC_MoveCaret(CLC_SR_CurrentAtomicObject);
+      //window.setTimeout("CLC_SR_ReadCurrentAtomicObject();", 0);
+      }
+   }
+
 
 //------------------------------------------
 //Note that this is for focused HTML elements only!
@@ -111,6 +134,13 @@ function CLC_SR_SpeakHTMLFocusEvents_Init(){
 //
 function CLC_SR_SpeakHTMLFocus_EventAnnouncer(event){
    if (!CLC_SR_Query_SpeakEvents()){
+      return;
+      }
+   if (event.target.tagName.toLowerCase() == "body"){ //If the body is focused, it is either an 
+                                                      //attempt to defocus something or it is 
+                                                      //handled by the active descendant. 
+                                                      //Therefore, do not try to speak the 
+                                                      //body on focus.
       return;
       }
    if (CLC_SR_ActOnFocusedElements){

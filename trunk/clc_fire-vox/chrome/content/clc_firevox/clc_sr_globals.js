@@ -18,6 +18,7 @@ var CLC_SR_LastScrollable = 0;      //Last object that was determined to be scro
 
 var CLC_SR_SpeakEventBuffer = "";   //Must use buffering! Else the string is deallocated
                                     //before CLC_Say can get it!  
+var CLC_SR_SpeakKeyEventBuffer = ""; //Keys need their own buffer to avoid clobbering something else.
 var CLC_SR_SpellTheEvent = true;    //Use this to handle selections where you wish to Shout 
                                     //it as a word rather than spell it out by setting this
                                     //to false. This is NOT a user option!
