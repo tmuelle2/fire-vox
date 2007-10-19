@@ -26,18 +26,18 @@ function CLC_SR_EchoKeys_EventAnnouncer(event){
       return;
       }
    CLC_SR_SpellTheEvent = true;
-   CLC_SR_SpeakEventBuffer = String.fromCharCode(event.charCode);
+   CLC_SR_SpeakKeyEventBuffer = String.fromCharCode(event.charCode);
    if (CLC_SR_ShouldEchoKeys(event)){
       CLC_SR_Stop = true; 
       if (CLC_SR_SpellTheEvent){
-         if (CLC_IsUpper(CLC_SR_SpeakEventBuffer)){
-            window.setTimeout("CLC_ShoutSpell(CLC_SR_SpeakEventBuffer,2);", 0);
+         if (CLC_IsUpper(CLC_SR_SpeakKeyEventBuffer)){
+            window.setTimeout("CLC_ShoutSpell(CLC_SR_SpeakKeyEventBuffer,2);", 0);
             return;
             }
-         window.setTimeout("CLC_ShoutSpell(CLC_SR_SpeakEventBuffer,0);", 0);  
+         window.setTimeout("CLC_ShoutSpell(CLC_SR_SpeakKeyEventBuffer,0);", 0);  
          }
       else{
-         window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0);", 0);  
+         window.setTimeout("CLC_Shout(CLC_SR_SpeakKeyEventBuffer,0);", 0);  
          }
       }
    }
@@ -80,12 +80,12 @@ function CLC_SR_ShouldEchoKeys(event){
       }
    if (event.target.localName && event.target.localName.toLowerCase()=="input"){
       if (event.target.type && event.target.type.toLowerCase() == "password"){
-         CLC_SR_SpeakEventBuffer = '*';
+         CLC_SR_SpeakKeyEventBuffer = '*';
          }
       return true;
       }
    if (event.target.localName && event.target.localName.toLowerCase()=="select"){
-      CLC_SR_SpeakEventBuffer = event.target.options[event.target.options.selectedIndex].textContent;       
+      CLC_SR_SpeakKeyEventBuffer = event.target.options[event.target.options.selectedIndex].textContent;       
       CLC_SR_SpellTheEvent = false;
       return true;
       }

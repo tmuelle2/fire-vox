@@ -21,7 +21,9 @@ function CLC_SR_Hotkey_Handler(event){
    //Also, reset the user activity level since the user actively tried to do something, 
    //and set the last spoken mutation type to null since the user could do something
    //which causes something which is not a live region to speak.
-   window.setTimeout("CLC_SR_StopSpeaking();", 0);
+
+   CLC_SR_StopSpeaking();
+
    CLC_SR_UserActivityLevel = CLC_SR_MaxUserActivityLevel;
    CLC_SR_LastSpokenMutationType = "";
 
