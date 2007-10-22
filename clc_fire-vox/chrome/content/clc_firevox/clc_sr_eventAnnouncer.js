@@ -115,13 +115,31 @@ function CLC_SR_BodyActiveDescendant_Announcer(event){
    if ( CLC_SR_ActOnFocusedElements && (event.target.tagName.toLowerCase() == "body") 
         && (event.attrName == "aria-activedescendant") && (event.newValue) ){
       var targetNode = CLC_Window().document.getElementById(event.newValue);
+      //This should not be necessary, but sometimes Firefox is slow in updating its internal
+      //state of IDs, causing getElementById to fail on something where the ID was added 
+      //very recently. If there is no targetNode, then this bug is the most likely culprit.
+      //Get around this by retrying the operation 1/10 of a second later.
+      if (!targetNode){
+         CLC_SR_FailedActiveDescendantId = event.newValue;
+         window.setTimeout("CLC_SR_RetryBodyActiveDescendant_Announcer();", 100);
+         return;
+         }
       CLC_SR_SpeakEventBuffer = CLC_GetTextContent(targetNode); 
       window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0);", 10);
-      //CLC_SR_PrevAtomicObject = CLC_SR_CurrentAtomicObject;
-      //CLC_SR_CurrentAtomicObject = targetNode;
-      // CLC_MoveCaret(CLC_SR_CurrentAtomicObject);
-      //window.setTimeout("CLC_SR_ReadCurrentAtomicObject();", 0);
       }
+   }
+
+
+//------------------------------------------
+//This is a hackaround to the problem of Firefox being slow when updating its internal
+//state of IDs that are available. Sometimes, if it is too slow, then a recently IDed node will
+//not show up and getElementById will return NULL. If this happens, then the operation
+//should be retried later.
+//
+function CLC_SR_RetryBodyActiveDescendant_Announcer(){
+   var targetNode = CLC_Window().document.getElementById(CLC_SR_FailedActiveDescendantId);
+   CLC_SR_SpeakEventBuffer = CLC_GetTextContent(targetNode); 
+   window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0);", 10);
    }
 
 
