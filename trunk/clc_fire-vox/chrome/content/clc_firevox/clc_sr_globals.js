@@ -84,6 +84,8 @@ var CLC_SR_MutationEventAnnouncementIsToggling = false;  //Flag to prevent toggl
 
 var CLC_SR_StickyModOn = false;
 
+var CLC_SR_FailedActiveDescendantId = "";  //For CLC_SR_RetryBodyActiveDescendant_Announcer in clc_sr_eventAnnouncer.js
+
 
 //Messages for easy translation
 //
