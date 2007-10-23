@@ -60,6 +60,10 @@ function CLC_GetTextContent(target){
   if (textContentFromRole){
     return textContentFromRole;
     }
+  //Ignore scripts in the body
+  if (target.parentNode && target.parentNode.tagName && target.parentNode.tagName.toLowerCase() == "script"){
+     return "";
+     } 
   //Do textarea twice because it may or may not have child nodes
   if (target.tagName && target.tagName.toLowerCase() == "textarea"){
      var labelText = CLC_Content_FindLabelText(target);

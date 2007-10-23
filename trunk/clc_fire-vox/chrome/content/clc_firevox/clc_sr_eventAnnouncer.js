@@ -124,7 +124,7 @@ function CLC_SR_BodyActiveDescendant_Announcer(event){
          window.setTimeout("CLC_SR_RetryBodyActiveDescendant_Announcer();", 100);
          return;
          }
-      CLC_SR_SpeakEventBuffer = CLC_GetTextContent(targetNode); 
+      CLC_SR_SpeakEventBuffer = CLC_GetTextContentOfAllChildren(targetNode); 
       window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0);", 10);
       }
    }
@@ -138,7 +138,7 @@ function CLC_SR_BodyActiveDescendant_Announcer(event){
 //
 function CLC_SR_RetryBodyActiveDescendant_Announcer(){
    var targetNode = CLC_Window().document.getElementById(CLC_SR_FailedActiveDescendantId);
-   CLC_SR_SpeakEventBuffer = CLC_GetTextContent(targetNode); 
+   CLC_SR_SpeakEventBuffer = CLC_GetTextContentOfAllChildren(targetNode); 
    window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0);", 10);
    }
 
