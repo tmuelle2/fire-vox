@@ -179,7 +179,6 @@ function CLC_SR_SetPref_AnnounceDOMMutationEventsMode(int_setting){
    CLC_SR_Pref.setIntPref("firevox.AnnounceDOMMutationEventsMode", int_setting);	
    }
 
-
 //---------------------------------
 function CLC_SR_Query_UseStickyMod(){
    if(CLC_SR_Pref.prefHasUserValue("firevox.UseStickyMod")){
@@ -190,6 +189,19 @@ function CLC_SR_Query_UseStickyMod(){
 //---------------------------------
 function CLC_SR_SetPref_UseStickyMod(int_setting){
    CLC_SR_Pref.setIntPref("firevox.UseStickyMod", int_setting);	
+   }
+
+
+//---------------------------------
+function CLC_SR_Query_UseSiteSpecificEnhancements(){
+   if(CLC_SR_Pref.prefHasUserValue("firevox.UseSiteSpecificEnhancements")){
+      return CLC_SR_Pref.getBoolPref("firevox.UseSiteSpecificEnhancements");
+      }
+   return true;
+   }
+//---------------------------------
+function CLC_SR_SetPref_UseSiteSpecificEnhancements(bool_setting){
+   CLC_SR_Pref.setBoolPref("firevox.UseSiteSpecificEnhancements", bool_setting);	
    }
 
 //---------------------------------
