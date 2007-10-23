@@ -216,6 +216,9 @@
           <menuitem checked="false" id="menu_FireVoxTTS_popup_Orca" label="Use Orca (Linux, local server TTS)" 
              type="checkbox" name="FireVoxTTS_SelectedSynth"
              oncommand="CLC_SR_StartOrca();" accesskey="O" />
+          <menuitem checked="false" id="menu_FireVoxTTS_popup_Emacspeak" label="Use Emacspeak (Linux, local server TTS)" 
+             type="checkbox" name="FireVoxTTS_SelectedSynth"
+             oncommand="CLC_SR_StartEmacspeak();" accesskey="E" />
         </menupopup>
     </menu>
 
