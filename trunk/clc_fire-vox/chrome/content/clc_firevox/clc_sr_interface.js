@@ -310,6 +310,14 @@ function CLC_SR_Init_MainBrowser(){
    CLC_SR_LastHighlightable = 0;  //Last object that was determined to be highlightable
    CLC_SR_LastFocusable = 0;      //Last object that was determined to be focusable
 
+   //Insert site specific scripts if appropriate
+   if (CLC_SR_Query_UseSiteSpecificEnhancements()){
+      var theScript = window.content.document.createElement('script');
+      theScript.type = 'text/javascript';
+      theScript.src = 'http://google-axsjax.googlecode.com/svn/trunk/common/axsScriptChooser.js';
+      window.content.document.getElementsByTagName('head')[0].appendChild(theScript);
+      }
+
    //Initialize the CSS Speech Property Rules
    if (CLC_SR_Query_UseCSSSpeechProperties()){
       try{

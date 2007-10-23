@@ -6,7 +6,7 @@
    buttons=" "
    onload="CLC_SR_PrefUI_Load();"
    onunload="CLC_SR_PrefUI_Save();"
-   title="Fire Vox Preferences" width="350" height="500" persist="width, height"
+   title="Fire Vox Preferences" width="400" height="500" persist="width, height"
    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" >
 	 
    <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts.js" />
@@ -70,6 +70,9 @@
 
             <checkbox label="Use Pause/Break as sticky modifier" checked="true" id="firevoxpref-useStickyMod-checkbox" 
                 onfocus="CLC_SR_SpeakPrefUI_CheckboxFocus('firevoxpref-useStickyMod-checkbox')" />
+
+            <checkbox label="Use site specific enhancements" checked="true" id="firevoxpref-useSiteSpecificEnhancements-checkbox" 
+                onfocus="CLC_SR_SpeakPrefUI_CheckboxFocus('firevoxpref-useSiteSpecificEnhancements-checkbox')" />
 
 
 
