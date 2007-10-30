@@ -13,3 +13,9 @@ clc-bundle.xpi:
 	rm clc_fire-vox.xpi 
 	rm clc_utils.xpi 
 	rm clc_tts.xpi 
+clean:
+	rm -f clc-bundle.xpi  \
+./clc_tts/chrome/clc_tts.jar \
+./clc_utils/chrome/clc_utils.jar \
+./clc_fire-vox/chrome/clc_firevox.jar 
+
