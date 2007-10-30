@@ -351,6 +351,12 @@ function CLC_SayWithProperties(messagestring, speechProperties_array, additional
       CLC_Orca_Prep();
       CLC_ORCA_OBJ.send("speak: " + messagestring);    
       }
+
+   if (CLC_TTS_ENGINE == 4){
+      //Emacspeak cannot do pitch, just ignore that for now
+      CLC_Emacspeak_Prep();
+      CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
+      }
    }
 
 
@@ -416,5 +422,12 @@ function CLC_ShoutWithProperties(messagestring, speechProperties_array, addition
       CLC_Interrupt();
       CLC_Orca_Prep();
       CLC_ORCA_OBJ.send("speak: " + messagestring);       
+      }
+
+   if (CLC_TTS_ENGINE == 4){
+      //Emacspeak cannot do pitch, just ignore that for now
+      CLC_Interrupt();
+      CLC_Emacspeak_Prep();
+      CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
       }
    }
