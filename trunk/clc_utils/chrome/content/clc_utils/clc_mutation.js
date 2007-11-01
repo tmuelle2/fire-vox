@@ -219,6 +219,9 @@ function CLC_MutationHandler(event,theType){
    if (!currentEventObj.politeness){
       currentEventObj.politeness = CLC_GetClosestAttributeOf(event.target, "aria-live");
       }
+   if (!currentEventObj.politeness && (CLC_GetRoleStringOf(event.target) == "alert")){
+      currentEventObj.politeness = "assertive";
+      }
    var isAtomic = CLC_GetClosestNSAttributeOf(event.target, "http://www.w3.org/2005/07/aaa", "atomic");
    if (!isAtomic){
       isAtomic = CLC_GetClosestAttributeOf(event.target, "aria-atomic");

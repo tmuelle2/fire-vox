@@ -363,6 +363,9 @@ function CLC_GenerateInfoFromRole(target){
   if (theRole == "listbox"){
     return CLC_Role_Listbox_Info1(target);
     }
+  if (theRole == "alert"){
+    return CLC_Role_Alert_Info1(target);
+    }
   return "";
   }
 
@@ -466,4 +469,8 @@ function CLC_Role_Img_Info1(target){
 
 function CLC_Role_Listbox_Info1(target){
   return "List box. " 
+  }
+
+function CLC_Role_Alert_Info1(target){
+  return "Alert. " 
   }
