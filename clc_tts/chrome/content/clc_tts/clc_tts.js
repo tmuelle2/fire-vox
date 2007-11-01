@@ -355,7 +355,7 @@ function CLC_Read(contentobject, contentstring, pitch) {
    if (CLC_TTS_ENGINE == 4){
       //Emacspeak cannot do pitch, just ignore that for now
       CLC_Emacspeak_Prep();
-      CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
+      CLC_EMACSPEAK_OBJ.send("speak: " + contentstring);     
       }
    for(var i = CLC_TTS_HISTORY_BUFFER_MAXSIZE; i > 1; i--){
       CLC_TTS_HISTORY_BUFFER[i-1] = CLC_TTS_HISTORY_BUFFER[i-2];
