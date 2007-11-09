@@ -49,7 +49,7 @@ var CLC_ORCA_URL = "http://127.0.0.1:20433";
 var CLC_ORCA_CheckingReadyStatus = false;
 
 var CLC_EMACSPEAK_OBJ;
-var CLC_EMACSPEAK_URL = "http://127.0.0.1:20533";
+var CLC_EMACSPEAK_URL = "http://127.0.0.1:2222";
 var CLC_EMACSPEAK_CheckingReadyStatus = false;
 
 
