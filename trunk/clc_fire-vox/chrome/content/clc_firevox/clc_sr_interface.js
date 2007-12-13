@@ -357,17 +357,10 @@ function CLC_SR_DOMNodeInsertedHandler_NewIFrame(event){
 
 
 //-----------------------------------------------
-//When a new iframe is loaded, do AxsJAX insertion on all iframes.
-//Unfortunately, the load event does not have target, orginalTarget, or
-//relatedTarget, so the only thing to do is insert AxsJAX into all
-//iframes on the page.
-//AxsJAX will not load when it has already loaded, so this is at least safe.
+//Insert site specific enhancements to pages in iframes
 //
 function CLC_SR_NewIFrameLoaded(event){
-  var iframesArray = window._content.document.getElementsByTagName("iframe");
-  for (var i=0; i < iframesArray.length; i++){
-    CLC_SR_InsertSiteSpecificEnhancements(iframesArray[i].contentDocument);
-    }
+  CLC_SR_InsertSiteSpecificEnhancements(event.currentTarget.contentDocument);
   }
 
 
