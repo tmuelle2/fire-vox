@@ -312,10 +312,7 @@ function CLC_SR_Init_MainBrowser(){
 
    //Insert site specific scripts if appropriate
    if (CLC_SR_Query_UseSiteSpecificEnhancements()){
-      var theScript = window.content.document.createElement('script');
-      theScript.type = 'text/javascript';
-      theScript.src = 'http://google-axsjax.googlecode.com/svn/trunk/common/axsScriptChooser.js';
-      window.content.document.getElementsByTagName('head')[0].appendChild(theScript);
+      CLC_SR_InsertSiteSpecificEnhancements(window._content.document);
       }
 
    //Initialize the CSS Speech Property Rules
@@ -346,6 +343,51 @@ function CLC_SR_Init_MainBrowser(){
         }
       }   
    }
+
+
+//-----------------------------------------------
+//This monitors for when iframes are added into a page
+//
+function CLC_SR_DOMNodeInsertedHandler_NewIFrame(event){
+  var target = event.target;
+  if (target.tagName && (target.tagName.toLowerCase() == "iframe")){   
+    target.addEventListener('load', CLC_SR_NewIFrameLoaded, true);
+    }
+  }
+
+
+//-----------------------------------------------
+//When a new iframe is loaded, do AxsJAX insertion on all iframes.
+//Unfortunately, the load event does not have target, orginalTarget, or
+//relatedTarget, so the only thing to do is insert AxsJAX into all
+//iframes on the page.
+//AxsJAX will not load when it has already loaded, so this is at least safe.
+//
+function CLC_SR_NewIFrameLoaded(event){
+  var iframesArray = window._content.document.getElementsByTagName("iframe");
+  for (var i=0; i < iframesArray.length; i++){
+    CLC_SR_InsertSiteSpecificEnhancements(iframesArray[i].contentDocument);
+    }
+  }
+
+
+//-----------------------------------------------
+//This inserts site specific enhancements into the targetDocument
+function CLC_SR_InsertSiteSpecificEnhancements(targetDocument){
+  var theScript = targetDocument.createElement('script');
+  theScript.type = 'text/javascript';
+  theScript.src = 'http://google-axsjax.googlecode.com/svn/trunk/common/axsScriptChooser.js';
+  targetDocument.getElementsByTagName('head')[0].appendChild(theScript);
+  targetDocument.addEventListener('DOMNodeInserted', CLC_SR_DOMNodeInsertedHandler_NewIFrame, true);
+  var framesArray = targetDocument.getElementsByTagName("frame");
+  for (var i=0; i < framesArray.length; i++){
+    CLC_SR_InsertSiteSpecificEnhancements(framesArray[i].contentDocument);
+    }
+  var iframesArray = targetDocument.getElementsByTagName("iframe");
+  for (var i=0; i < iframesArray.length; i++){
+    CLC_SR_InsertSiteSpecificEnhancements(iframesArray[i].contentDocument);
+    }
+  }
 
 
 //-----------------------------------------------
