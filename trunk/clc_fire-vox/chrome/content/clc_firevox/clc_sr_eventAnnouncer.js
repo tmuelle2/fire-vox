@@ -161,15 +161,22 @@ function CLC_SR_SpeakHTMLFocus_EventAnnouncer(event){
                                                       //body on focus.
       return;
       }
+
    if (CLC_SR_ActOnFocusedElements){
       var temp;
       try{
          temp = CLC_GetFirstAtomicObject(event.target);
-         if (temp){
+         if (temp){            
             CLC_SR_PrevAtomicObject = CLC_SR_CurrentAtomicObject;
             CLC_SR_CurrentAtomicObject = temp;
             CLC_MoveCaret(CLC_SR_CurrentAtomicObject);
-            window.setTimeout("CLC_SR_ReadCurrentAtomicObject();", 0);
+            if (CLC_SR_Query_UseBriefMode()){
+               CLC_SR_SpeakEventBuffer = CLC_GetTextContentOfAllChildren(CLC_SR_CurrentAtomicObject); 
+               window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0);", 10);
+               }
+            else {
+               window.setTimeout("CLC_SR_ReadCurrentAtomicObject();", 0);
+               }
             }
          }
       catch(e){};
