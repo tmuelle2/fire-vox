@@ -170,6 +170,9 @@ function CLC_Content_FindLabelText(target){
 //What else should be here besides the ID? Name? Value?
 //
 function CLC_Content_FindRadioButtonDirectContent(target){
+   if (target.title){
+      return target.title;
+      }
    if (target.id){
       return target.id;
       }
@@ -183,6 +186,9 @@ function CLC_Content_FindRadioButtonDirectContent(target){
 //What else should be here besides the ID? Name? Value?
 //
 function CLC_Content_FindTextBlankDirectContent(target){
+   if (target.title){
+      return target.title;
+      }
    if (target.id){
       return target.id;
       }
@@ -196,6 +202,9 @@ function CLC_Content_FindTextBlankDirectContent(target){
 //What else should be here besides the ID? Name? Value?
 //
 function CLC_Content_FindPasswordDirectContent(target){
+   if (target.title){
+      return target.title;
+      }
    if (target.id){
       return target.id;
       }
@@ -209,6 +218,9 @@ function CLC_Content_FindPasswordDirectContent(target){
 //What else should be here besides the ID? Name? Value?
 //
 function CLC_Content_FindCheckboxDirectContent(target){
+   if (target.title){
+      return target.title;
+      }
    if (target.id){
       return target.id;
       }
