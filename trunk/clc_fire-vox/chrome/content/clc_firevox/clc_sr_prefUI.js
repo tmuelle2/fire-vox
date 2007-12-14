@@ -25,6 +25,7 @@ function CLC_SR_PrefUI_Save(){
    CLC_SR_SetPref_AutodetectLang(document.getElementById("firevoxpref-autodetectLang-checkbox").checked);
    CLC_SR_SetPref_UseStickyMod(document.getElementById("firevoxpref-useStickyMod-checkbox").checked);
    CLC_SR_SetPref_UseSiteSpecificEnhancements(document.getElementById("firevoxpref-useSiteSpecificEnhancements-checkbox").checked);
+   CLC_SR_SetPref_UseBriefMode(document.getElementById("firevoxpref-useBriefMode-checkbox").checked);
 
    //Save keys
    CLC_SR_SetKey_ReadBackward(document.getElementById("firevoxpref-keys-ReadBackward").value);
@@ -58,6 +59,7 @@ function CLC_SR_PrefUI_UpdateBlanks(){
    document.getElementById("firevoxpref-autodetectLang-checkbox").checked = CLC_SR_Query_AutodetectLang();
    document.getElementById("firevoxpref-useStickyMod-checkbox").checked = CLC_SR_Query_UseStickyMod();
    document.getElementById("firevoxpref-useSiteSpecificEnhancements-checkbox").checked = CLC_SR_Query_UseSiteSpecificEnhancements();
+   document.getElementById("firevoxpref-useBriefMode-checkbox").checked = CLC_SR_Query_UseBriefMode();
 
    //Load keys
    document.getElementById("firevoxpref-keys-ReadBackward").value = CLC_SR_QueryKey_ReadBackward();

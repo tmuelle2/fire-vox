@@ -74,7 +74,11 @@
             <checkbox label="Use site specific enhancements" checked="true" id="firevoxpref-useSiteSpecificEnhancements-checkbox" 
                 onfocus="CLC_SR_SpeakPrefUI_CheckboxFocus('firevoxpref-useSiteSpecificEnhancements-checkbox')" />
 
+         </hbox>
+         <hbox align="center" pack="start"> 
 
+            <checkbox label="Brief Mode" checked="true" id="firevoxpref-useBriefMode-checkbox" 
+                onfocus="CLC_SR_SpeakPrefUI_CheckboxFocus('firevoxpref-useBriefMode-checkbox')" />
 
          </hbox>
 

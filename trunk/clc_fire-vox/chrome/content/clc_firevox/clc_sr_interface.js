@@ -327,18 +327,14 @@ function CLC_SR_Init_MainBrowser(){
       CLC_SR_SPCSSRules = 0;
       }
 
+   CLC_InfoLang = 1;
+   if (CLC_SR_Query_UseBriefMode()){
+     CLC_InfoLang = 3;
+     }
+
    if (CLC_SR_Query_SpeakEvents()){
       if (CLC_Ready()){
         CLC_SR_SpeakEventBuffer = CLC_GenerateIDInfo(window._content.document.documentElement);
-        if (CLC_SR_Query_AnnounceDOMMutationEventsMode() == 0){
-           CLC_SR_SpeakEventBuffer = CLC_SR_SpeakEventBuffer + " " + CLC_SR_MSG0030;
-           }
-        else if (CLC_SR_Query_AnnounceDOMMutationEventsMode() == 1){
-           CLC_SR_SpeakEventBuffer = CLC_SR_SpeakEventBuffer + " " + CLC_SR_MSG0031;
-           }
-        else if (CLC_SR_Query_AnnounceDOMMutationEventsMode() == 2){
-           CLC_SR_SpeakEventBuffer = CLC_SR_SpeakEventBuffer + " " + CLC_SR_MSG0029;
-           }
         window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer, 0);", 10);
         }
       }   

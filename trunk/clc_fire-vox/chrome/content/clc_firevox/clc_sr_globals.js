@@ -117,9 +117,9 @@ var CLC_SR_MSG0025 = "Options List ";   //For the Firefox Options Dialog
 var CLC_SR_MSG0026 = "Change. ";   //DOM Mutation Event - text changed
 var CLC_SR_MSG0027 = "Removal. ";   //DOM Mutation Event - DOM element removed
 var CLC_SR_MSG0028 = "New. ";   //DOM Mutation Event - DOM element added
-var CLC_SR_MSG0029 = "Tagged Live Region Announcements";    //For toggling the DOM Mutation event announcements
-var CLC_SR_MSG0030 = "No Live Region Announcements";        //For toggling the DOM Mutation event announcements
-var CLC_SR_MSG0031 = "Default Live Region Announcements";   //For toggling the DOM Mutation event announcements
+var CLC_SR_MSG0029 = "Default Live Region Announcements";    //For toggling the DOM Mutation event announcements
+var CLC_SR_MSG0030 = "No Live Region Announcements";         //For toggling the DOM Mutation event announcements
+var CLC_SR_MSG0031 = "Heuristic Live Region Announcements";  //For toggling the DOM Mutation event announcements
 var CLC_SR_MSG0032 = "Info.";   //Chatzilla msg-type
 var CLC_SR_MSG0033 = " text box focused. ";   //Alert box input blanks
 
