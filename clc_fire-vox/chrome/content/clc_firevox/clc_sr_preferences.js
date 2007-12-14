@@ -171,7 +171,7 @@ function CLC_SR_Query_AnnounceDOMMutationEventsMode(){
    if(CLC_SR_Pref.prefHasUserValue("firevox.AnnounceDOMMutationEventsMode")){
       return CLC_SR_Pref.getIntPref("firevox.AnnounceDOMMutationEventsMode");
       }
-   return 1;
+   return 2;
    }
 
 //---------------------------------
@@ -203,6 +203,19 @@ function CLC_SR_Query_UseSiteSpecificEnhancements(){
 function CLC_SR_SetPref_UseSiteSpecificEnhancements(bool_setting){
    CLC_SR_Pref.setBoolPref("firevox.UseSiteSpecificEnhancements", bool_setting);	
    }
+
+//---------------------------------
+function CLC_SR_Query_UseBriefMode(){
+   if(CLC_SR_Pref.prefHasUserValue("firevox.UseBriefMode")){
+      return CLC_SR_Pref.getBoolPref("firevox.UseBriefMode");
+      }
+   return false;
+   }
+//---------------------------------
+function CLC_SR_SetPref_UseBriefMode(bool_setting){
+   CLC_SR_Pref.setBoolPref("firevox.UseBriefMode", bool_setting);	
+   }
+
 
 //---------------------------------
 
