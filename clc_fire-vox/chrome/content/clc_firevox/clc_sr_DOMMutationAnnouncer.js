@@ -244,6 +244,9 @@ function CLC_SR_SpeakMutation(){
    if (currentMutationEvent.atomic == true){
       eventText = currentMutationEvent.atomicText;
       }
+   if (CLC_SR_Query_UseBriefMode()){
+      announcement = "";
+      }
 
    //If interim events shouldn't be announced, then whether 
    //or not this live region should be spoken must be evaluated.
