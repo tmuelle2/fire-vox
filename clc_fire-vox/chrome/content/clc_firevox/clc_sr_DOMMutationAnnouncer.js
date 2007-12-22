@@ -318,6 +318,12 @@ function CLC_SR_SpeakMutation(){
       }
    CLC_Say(announcement, 1);
 
+   //Find the language of the content and set the synthesizer
+   if (CLC_SR_Query_AutodetectLang()){
+      var currentObjLang = CLC_Content_FindLanguage(currentMutationEvent.target);
+      CLC_SetLanguage(currentObjLang);
+      }
+
    //Read the object of the mutation event
    if (CLC_SR_Query_UseCSSSpeechProperties()){
       try{
@@ -339,5 +345,11 @@ function CLC_SR_SpeakMutation(){
    else {
       CLC_Read(currentMutationEvent.target,eventText, 0);
       }
+
+   //Reset to the default language
+   if (CLC_SR_Query_AutodetectLang()){
+      CLC_SetLanguage(CLC_SR_DefaultLanguage);
+      }
+
 
    }
