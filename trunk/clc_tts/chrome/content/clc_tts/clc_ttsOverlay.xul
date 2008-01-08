@@ -33,5 +33,7 @@
   <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_using_properties.js" />
   <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_orca_fix.js" />
   <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_emacspeak_fix.js" />
+  <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_mac_fix.js" />
+
 
 </overlay>

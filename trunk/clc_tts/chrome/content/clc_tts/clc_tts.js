@@ -52,6 +52,12 @@ var CLC_EMACSPEAK_OBJ;
 var CLC_EMACSPEAK_URL = "http://127.0.0.1:2222";
 var CLC_EMACSPEAK_CheckingReadyStatus = false;
 
+var CLC_MACTTS_OBJ;
+var CLC_MACTTS_PORT = "58384";
+var CLC_MACTTS_CheckingReadyStatus = false;
+var CLC_MACTTS_PROCESSINGQUEUE = false;
+var CLC_MACTTS_SPEECHQUEUE;
+
 
 //------------------------------------------
 
@@ -62,6 +68,7 @@ var CLC_EMACSPEAK_CheckingReadyStatus = false;
 //   2 = FreeTTS (Java based TTS)
 //   3 = Orca (Linux only, HTTPRequest TTS)
 //   4 = Emacspeak (Linux only, HTTPRequest TTS)
+//   5 = Mac Local TTS Server (Mac only, HTTPRequest TTS)
 //
 //
 //Returns true if initialized successfully; otherwise false.
@@ -149,6 +156,29 @@ function CLC_Init(engine) {
         CLC_TTS_ENGINE = 4;
         return true;
         }
+   if (engine == 5){
+	try {
+                CLC_MacTTS_InitLocalTTSServer();
+                CLC_MACTTS_SPEECHQUEUE = new Array();
+                CLC_MACTTS_CheckingReadyStatus = false;
+                CLC_MACTTS_PROCESSINGQUEUE = false;
+                CLC_MACTTS_OBJ = new XMLHttpRequest();
+		CLC_MACTTS_OBJ.overrideMimeType('text/xml');
+                //Use the false flag since we do not do this asynchronously.
+                //The goal here is to test for the Mac TTS Server's existence... 
+                //There will be an exception thrown if it does not exist.
+		CLC_MACTTS_OBJ.open('POST', "http://127.0.0.1:" + CLC_MACTTS_PORT + "/", false);
+		CLC_MACTTS_OBJ.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		CLC_MACTTS_OBJ.send(null); 
+	} catch (err) {
+        //Fail quietly to avoid a failure loop of error messages caused by trying to speak error alert boxes
+	//	alert(err);
+		return false;
+	}    
+        CLC_Make_TTS_History_Buffer(20);
+        CLC_TTS_ENGINE = 5;
+        return true;
+        }
    CLC_TTS_ENGINE = 0;
    return false;   
    }
@@ -209,12 +239,20 @@ function CLC_Ready() {
       CLC_ORCA_OBJ.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       CLC_ORCA_OBJ.send("isSpeaking");
       if (CLC_ORCA_OBJ.responseText && CLC_ORCA_OBJ.responseText.toLowerCase() == "false"){
+         CLC_ORCA_CheckingReadyStatus = false;
          return true;
          }
+      CLC_ORCA_CheckingReadyStatus = false;
       return false;
       }
    if (CLC_TTS_ENGINE == 4){
       return true; //Emacspeak cannot do "ready" reliably; always treat it as true for now.
+      }
+   if (CLC_TTS_ENGINE == 5){
+      if (CLC_MACTTS_SPEECHQUEUE.length > 0){
+        return false;
+        }
+      return CLC_MacTTS_ServerReady();
       }
    }
 
@@ -242,6 +280,10 @@ function CLC_Interrupt() {
    if (CLC_TTS_ENGINE == 4){
       CLC_Emacspeak_Prep();
       CLC_EMACSPEAK_OBJ.send("stop"); 
+      return;
+      }
+   if (CLC_TTS_ENGINE == 5){
+      CLC_Shout("/",0); 
       return;
       }
    }
@@ -298,6 +340,13 @@ function CLC_Say(messagestring, pitch) {
       //Emacspeak cannot do pitch, just ignore that for now
       CLC_Emacspeak_Prep();
       CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
+      }
+   if (CLC_TTS_ENGINE == 5){
+      //Put in speech queue management for Mac   
+      CLC_MACTTS_SPEECHQUEUE.push(messagestring);
+      if (!CLC_MACTTS_PROCESSINGQUEUE){
+        CLC_MacTTS_ProcessSpeechQueue();
+        }
       }
    }
 
@@ -356,6 +405,9 @@ function CLC_Read(contentobject, contentstring, pitch) {
       //Emacspeak cannot do pitch, just ignore that for now
       CLC_Emacspeak_Prep();
       CLC_EMACSPEAK_OBJ.send("speak: " + contentstring);     
+      }
+   if (CLC_TTS_ENGINE == 5){
+      CLC_Say(contentstring, pitch);     
       }
    for(var i = CLC_TTS_HISTORY_BUFFER_MAXSIZE; i > 1; i--){
       CLC_TTS_HISTORY_BUFFER[i-1] = CLC_TTS_HISTORY_BUFFER[i-2];
@@ -489,8 +541,13 @@ function CLC_Spell(messagestring, pitch) {
       }
    if (CLC_TTS_ENGINE == 4){
       //Emacspeak cannot do pitch, just ignore that for now
+      messagestring = CLC_FREETTS_InsertSpaces(messagestring);
       CLC_Emacspeak_Prep();
       CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
+      }
+   if (CLC_TTS_ENGINE == 5){
+      messagestring = CLC_FREETTS_InsertSpaces(messagestring);      
+      CLC_Say(messagestring, pitch);     
       }
    }
 
@@ -551,6 +608,10 @@ function CLC_Shout(messagestring, pitch) {
       CLC_Interrupt();
       CLC_Emacspeak_Prep();
       CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
+      }
+   if (CLC_TTS_ENGINE == 5){
+      CLC_MACTTS_SPEECHQUEUE = new Array();
+      CLC_MacTTS_SendToTTS(messagestring);
       }
    }
 
@@ -615,6 +676,10 @@ function CLC_ShoutSpell(messagestring, pitch) {
       messagestring = CLC_FREETTS_InsertSpaces(messagestring);
       CLC_Emacspeak_Prep();
       CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
+      }
+   if (CLC_TTS_ENGINE == 5){
+      messagestring = CLC_FREETTS_InsertSpaces(messagestring);
+      CLC_Shout(messagestring, pitch);   
       }
    }
 

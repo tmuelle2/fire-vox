@@ -357,6 +357,10 @@ function CLC_SayWithProperties(messagestring, speechProperties_array, additional
       CLC_Emacspeak_Prep();
       CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
       }
+
+   if (CLC_TTS_ENGINE == 5){
+      CLC_Say(messagestring,0);    
+      }
    }
 
 
@@ -429,5 +433,9 @@ function CLC_ShoutWithProperties(messagestring, speechProperties_array, addition
       CLC_Interrupt();
       CLC_Emacspeak_Prep();
       CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
+      }
+
+   if (CLC_TTS_ENGINE == 5){
+      CLC_Shout(messagestring,0);    
       }
    }
