@@ -27,6 +27,10 @@ function CLC_SR_StartTTSEngine(){
       CLC_SR_StartEmacspeak();
       return;
       }
+   if (prev_tts == 5){
+      CLC_SR_StartMacTTS();
+      return;
+      }
    //If there was nothing set, try to pick one.
    if (!CLC_SR_Query_SAPIFailed()){
       CLC_SR_StartSAPITTS();
@@ -43,7 +47,11 @@ function CLC_SR_StartTTSEngine(){
    if (!CLC_SR_Query_EmacspeakFailed()){
       CLC_SR_StartEmacspeak();
       return;
-      }     
+      }  
+   if (!CLC_SR_Query_MacTTSFailed()){
+      CLC_SR_StartMacTTS();
+      return;
+      }    
    }
 
 
@@ -89,6 +97,17 @@ function CLC_SR_StartEmacspeak(){
    if(CLC_Init(4)){
       CLC_SR_SetPref_EmacspeakFailed(false);
       CLC_SR_SetPref_LastWorkingTTS(4);
+      }
+   CLC_SR_MarkTTSInMenu();
+   }
+
+
+function CLC_SR_StartMacTTS(){
+   CLC_SR_SetPref_LastWorkingTTS(0);
+   CLC_SR_SetPref_MacTTSFailed(true);
+   if(CLC_Init(5)){
+      CLC_SR_SetPref_MacTTSFailed(false);
+      CLC_SR_SetPref_LastWorkingTTS(5);
       }
    CLC_SR_MarkTTSInMenu();
    }
@@ -163,6 +182,19 @@ function CLC_SR_SetPref_EmacspeakFailed(bool_setting){
    }
 
 //---------------------------------
+function CLC_SR_Query_MacTTSFailed(){
+   if(CLC_SR_Pref.prefHasUserValue("firevox.MacTTSFailed")){
+      return CLC_SR_Pref.getBoolPref("firevox.MacTTSFailed");
+      }
+   return false;
+   }
+
+//---------------------------------
+function CLC_SR_SetPref_MacTTSFailed(bool_setting){
+   CLC_SR_Pref.setBoolPref("firevox.MacTTSFailed", bool_setting);	
+   }
+
+//---------------------------------
 
 
 function CLC_SR_MarkTTSInMenu(){
@@ -175,6 +207,7 @@ function CLC_SR_MarkTTSInMenu(){
       document.getElementById("menu_FireVoxTTS_popup_FreeTTS").attributes[0].nodeValue = false;
       document.getElementById("menu_FireVoxTTS_popup_Orca").attributes[0].nodeValue = false;
       document.getElementById("menu_FireVoxTTS_popup_Emacspeak").attributes[0].nodeValue = false;
+      document.getElementById("menu_FireVoxTTS_popup_MacTTS").attributes[0].nodeValue = false;
    
       if (prev_tts == 1){
          document.getElementById("menu_FireVoxTTS_popup_SAPI5").attributes[0].nodeValue = true;
@@ -190,6 +223,10 @@ function CLC_SR_MarkTTSInMenu(){
          }
       if (prev_tts == 4){
          document.getElementById("menu_FireVoxTTS_popup_Emacspeak").attributes[0].nodeValue = true;
+         return;
+         }
+      if (prev_tts == 5){
+         document.getElementById("menu_FireVoxTTS_popup_MacTTS").attributes[0].nodeValue = true;
          return;
          }	
       }

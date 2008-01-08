@@ -219,6 +219,9 @@
           <menuitem checked="false" id="menu_FireVoxTTS_popup_Emacspeak" label="Use Emacspeak (Linux, local server TTS)" 
              type="checkbox" name="FireVoxTTS_SelectedSynth"
              oncommand="CLC_SR_StartEmacspeak();" accesskey="E" />
+          <menuitem checked="false" id="menu_FireVoxTTS_popup_MacTTS" label="Use Mac TTS (Mac, local server TTS)" 
+             type="checkbox" name="FireVoxTTS_SelectedSynth"
+             oncommand="CLC_SR_StartMacTTS();" accesskey="M" />
         </menupopup>
     </menu>
 
