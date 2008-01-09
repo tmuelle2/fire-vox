@@ -28,9 +28,14 @@
 //
 function CLC_MacTTS_SanitizeInput(targetStr){
   targetStr = targetStr.replace("#"," ");
+  targetStr = targetStr.replace("["," ");
+  targetStr = targetStr.replace("]"," ");
   return targetStr;
   }
 
+//------------------------------------------
+//
+//
 function CLC_MacTTS_InitLocalTTSServer(){
   try {
     CLC_MacTTS_ServerReady();
@@ -69,6 +74,9 @@ function CLC_MacTTS_InitLocalTTSServer(){
   thread.currentThread.sleep(1000);
   }
 
+//------------------------------------------
+//
+//
 function CLC_MacTTS_MakeExecutable(targetFilePath){
   var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);	
   file.initWithPath("/");
@@ -81,8 +89,9 @@ function CLC_MacTTS_MakeExecutable(targetFilePath){
   }
 
 
-
-
+//------------------------------------------
+//
+//
 function CLC_MacTTS_ProcessSpeechQueue(){
   CLC_MACTTS_PROCESSINGQUEUE = true;
   if (CLC_MACTTS_SPEECHQUEUE.length == 0){
@@ -96,8 +105,10 @@ function CLC_MacTTS_ProcessSpeechQueue(){
   window.setTimeout("CLC_MacTTS_ProcessSpeechQueue();",100);
   }
 
+//------------------------------------------
+//
+//
 function CLC_MacTTS_SendToTTS(speechStr){
-  speechStr = CLC_MacTTS_SanitizeInput(speechStr);
   CLC_MACTTS_OBJ.abort();
   CLC_MACTTS_OBJ.overrideMimeType('text/xml');
   CLC_MACTTS_OBJ.open('GET', "http://127.0.0.1:" + CLC_MACTTS_PORT + "/" + speechStr, true);
@@ -105,6 +116,9 @@ function CLC_MacTTS_SendToTTS(speechStr){
   CLC_MACTTS_OBJ.send("");
   }
 
+//------------------------------------------
+//
+//
 function CLC_MacTTS_ServerReady(){
   if (CLC_MACTTS_CheckingReadyStatus){
     return false;
@@ -122,3 +136,7 @@ function CLC_MacTTS_ServerReady(){
   CLC_MACTTS_CheckingReadyStatus = false;
   return false;
   }
+
+
+
+
