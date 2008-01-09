@@ -159,19 +159,13 @@ function CLC_Init(engine) {
         }
    if (engine == 5){
 	try {
-                CLC_MacTTS_InitLocalTTSServer();
+                CLC_MACTTS_OBJ = new XMLHttpRequest();
+                CLC_MACTTS_CHECKER = new XMLHttpRequest();
                 CLC_MACTTS_SPEECHQUEUE = new Array();
                 CLC_MACTTS_CheckingReadyStatus = false;
                 CLC_MACTTS_PROCESSINGQUEUE = false;
-                CLC_MACTTS_OBJ = new XMLHttpRequest();
-                CLC_MACTTS_CHECKER = new XMLHttpRequest();
-		CLC_MACTTS_OBJ.overrideMimeType('text/xml');
-                //Use the false flag since we do not do this asynchronously.
-                //The goal here is to test for the Mac TTS Server's existence... 
-                //There will be an exception thrown if it does not exist.
-		CLC_MACTTS_OBJ.open('POST', "http://127.0.0.1:" + CLC_MACTTS_PORT + "/", false);
-		CLC_MACTTS_OBJ.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		CLC_MACTTS_OBJ.send(null); 
+                CLC_MacTTS_InitLocalTTSServer();
+                CLC_MacTTS_ServerReady();  //This call will fail if Mac TTS did not init properly
 	} catch (err) {
         //Fail quietly to avoid a failure loop of error messages caused by trying to speak error alert boxes
 	//	alert(err);
