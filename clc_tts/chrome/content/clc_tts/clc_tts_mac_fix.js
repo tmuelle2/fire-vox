@@ -32,6 +32,12 @@ function CLC_MacTTS_SanitizeInput(targetStr){
   }
 
 function CLC_MacTTS_InitLocalTTSServer(){
+  try {
+    CLC_MacTTS_ServerReady();
+    return; //Return if Mac TTS already running
+    }
+  catch (err) { } //Will receive an error if it is not running yet
+
   //Find the TTS executable
   const id = "{7529D455-3392-4a17-A489-0C737D1DBAC0}";
   var extensionPath = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager).getInstallLocation(id).getItemLocation(id).path;
@@ -57,6 +63,10 @@ function CLC_MacTTS_InitLocalTTSServer(){
   // to the process.
   var args = [CLC_MACTTS_PORT];
   process.run(false, args, args.length);
+
+  //Sleep for one second 
+  var thread = Components.classes["@mozilla.org/thread;1"].createInstance(Components.interfaces.nsIThread);
+  thread.currentThread.sleep(1000);
   }
 
 function CLC_MacTTS_MakeExecutable(targetFilePath){
