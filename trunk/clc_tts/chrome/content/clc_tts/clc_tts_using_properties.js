@@ -52,6 +52,11 @@
 //     for lower, positive numbers for higher - total number 
 //     of levels are same as defined in CSS)
 //
+//The boolean modes are:
+//-1 = undefined; this is used to indicate that a 
+//     property should be skipped
+// 0 = boolean: value of 1 is true, else false.
+//
 //Since this is a work in progress, to avoid forcing people
 //who use this function to modify their programs any time
 //a new speech property is added, the properties will
@@ -60,6 +65,7 @@
 //1 = pitch range; standard modes
 //2 = speaking rate; standard modes
 //3 = volume; standard modes
+//4 = spell out; boolean modes
 //
 //The property lists may be shorter than defined; any
 //property that is past the end of the given array will 
@@ -311,6 +317,140 @@ function CLC_FreeTTS_CalcProperties(speechProperties_array, additionalProperties
 
 //------------------------------------------
 //
+function CLC_MacTTS_PitchValueToLevel(pitch){
+  var pitchLevel = Math.round( (pitch - 120) / 10 );
+  if (pitchLevel < -10){
+     return -10;
+     }
+  if (pitchLevel > 10){
+     return 10;
+     }
+  return pitchLevel;
+  }
+
+//------------------------------------------
+//
+//This function generates a string with Mac TTS 
+//embedded speech properties.
+//
+function CLC_GenerateMacTTSStringWithProperties(messagestring, speechProperties_array, additionalProperties_array){
+   var MACTTS_STR = CLC_MacTTS_SanitizeInput(messagestring);
+
+
+   //Set pitch
+   if (speechProperties_array.length > 0){
+      //Make sure pitch property was valid
+      if (speechProperties_array[0].length == 2){
+         var pitch = 0;
+         //Undefined - Use default by doing nothing
+         if (speechProperties_array[0][1] == -1){   
+            pitch = CLC_MACTTS_DefaultMiddle;             
+            }
+         //Absolute 
+         if (speechProperties_array[0][1] == 0){ 
+            pitch = CLC_MacTTS_PitchValueToLevel(speechProperties_array[0][0]);      
+            }
+         //Percentage 
+         if (speechProperties_array[0][1] == 1){ 
+            pitch = (speechProperties_array[0][0] / 100) * (CLC_MACTTS_DefaultMiddle + 10) * 5; 
+            pitch = Math.round( (pitch / 5) - 10 );
+            }
+         //Enumeration
+         if (speechProperties_array[0][1] == 2){ 
+            if ((speechProperties_array[0][0] < 3) && (speechProperties_array[0][0] > -3)){
+               pitch = speechProperties_array[0][0] * 5; 
+               }
+            }
+         //Apply the pitch
+         if (pitch < 0){
+           MACTTS_STR = '[[pbas ' + pitch + ']]' + MACTTS_STR;
+           }
+         else {
+           MACTTS_STR = '[[pbas +' + pitch + ']]' + MACTTS_STR;
+           }
+         }
+      }
+
+   //Ignore pitch range since SAPI 5 does not support this property
+
+   //Set rate
+   if (speechProperties_array.length > 2){
+      //Make sure rate property was valid
+      if (speechProperties_array[2].length == 2){
+         var rate = 0;
+         //Undefined - Use default
+         if ((speechProperties_array[2][1] == -1) || (speechProperties_array[2][1] == 0)){ 
+            rate = CLC_MACTTS_DefaultRate;   
+            }
+         //Absolute - No absolute for rate since it is not defined in CSS3
+         //Percentage
+         if (speechProperties_array[2][1] == 1){ 
+            var rate = (speechProperties_array[2][0] / 100) * (CLC_SAPI5_DefaultRate + 10) * 5; 
+            rate = Math.round( (rate / 5) - 10 );
+            }
+         //Enumeration
+         if (speechProperties_array[2][1] == 2){ 
+            if ((speechProperties_array[2][0] < 3) && (speechProperties_array[2][0] > -3)){
+               rate = speechProperties_array[2][0] * 75; 
+               }
+            }
+         //Apply the rate
+         if (rate < 0){
+           MACTTS_STR = '[[rate ' + rate + ']]' + MACTTS_STR;
+           }
+         else {
+           MACTTS_STR = '[[rate +' + rate + ']]' + MACTTS_STR;
+           }
+         }
+      }
+
+   //Set volume
+   if (speechProperties_array.length > 3){
+      //Make sure volume property was valid
+      if (speechProperties_array[3].length == 2){
+         var volume = 1;
+         //Undefined - Use default
+         if (speechProperties_array[3][1] == -1){ 
+            volume = CLC_MACTTS_DefaultVolume;      
+            }
+         //Absolute 
+         if (speechProperties_array[3][1] == 0){ 
+            volume = speechProperties_array[3][0] / 100; 
+            }
+         //Percentage
+         if (speechProperties_array[3][1] == 1){ 
+            volume = Math.round( (speechProperties_array[3][0] / 100) * CLC_MACTTS_DefaultVolume ); 
+            }
+         //Enumeration
+         if (speechProperties_array[3][1] == 2){ 
+            if ((speechProperties_array[3][0] < 3) && (speechProperties_array[3][0] > -4)){
+               volume = ((speechProperties_array[3][0] + 3) * 20) / 100; 
+               }
+            }
+         //Apply the volume
+         MACTTS_STR = '[[volm ' + volume + ']]' + MACTTS_STR;
+         }
+      }
+
+   //Set normal or spelling mode
+   if (speechProperties_array.length > 4){
+      //Make sure spell out property was valid
+      if (speechProperties_array[4].length == 2){
+         //Boolean mode and true
+         if ( (speechProperties_array[4][1] == 0) && (speechProperties_array[4][0] == 1) ){
+            MACTTS_STR = "[[char LTRL]]" + MACTTS_STR;
+            }
+         }
+      }
+
+
+   MACTTS_STR = "[[rset 0]]" + MACTTS_STR; //Start from a clean slate when applying properties
+   return MACTTS_STR;
+   }
+
+
+//------------------------------------------
+//
 //This function is intended to allow developers to
 //make the speech engine say a message. Possible uses
 //include (but are definitely not limited to) announcing
@@ -359,7 +499,12 @@ function CLC_SayWithProperties(messagestring, speechProperties_array, additional
       }
 
    if (CLC_TTS_ENGINE == 5){
-      CLC_Say(messagestring,0);    
+      var MACTTS_STR = CLC_GenerateMacTTSStringWithProperties(messagestring, speechProperties_array, additionalProperties_array);
+      //Put in speech queue management for Mac   
+      CLC_MACTTS_SPEECHQUEUE.push(MACTTS_STR);
+      if (!CLC_MACTTS_PROCESSINGQUEUE){
+        CLC_MacTTS_ProcessSpeechQueue();
+        } 
       }
    }
 
@@ -436,6 +581,8 @@ function CLC_ShoutWithProperties(messagestring, speechProperties_array, addition
       }
 
    if (CLC_TTS_ENGINE == 5){
-      CLC_Shout(messagestring,0);    
+      var MACTTS_STR = CLC_GenerateMacTTSStringWithProperties(messagestring, speechProperties_array, additionalProperties_array);
+      CLC_MACTTS_SPEECHQUEUE = new Array();
+      CLC_MacTTS_SendToTTS(MACTTS_STR); 
       }
    }

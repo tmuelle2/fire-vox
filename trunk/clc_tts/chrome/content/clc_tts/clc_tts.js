@@ -43,6 +43,9 @@ var CLC_FreeTTS_DefaultMiddle = 100;
 var CLC_FreeTTS_DefaultRange = 35;
 var CLC_FreeTTS_DefaultRate = 150;
 var CLC_FreeTTS_DefaultVolume = 1.0;
+var CLC_MACTTS_DefaultMiddle = 0;
+var CLC_MACTTS_DefaultRate = 0;
+var CLC_MACTTS_DefaultVolume = 1;
 
 var CLC_ORCA_OBJ;
 var CLC_ORCA_URL = "http://127.0.0.1:20433";
@@ -159,13 +162,19 @@ function CLC_Init(engine) {
         }
    if (engine == 5){
 	try {
-                CLC_MACTTS_OBJ = new XMLHttpRequest();
-                CLC_MACTTS_CHECKER = new XMLHttpRequest();
+                CLC_MacTTS_InitLocalTTSServer();
                 CLC_MACTTS_SPEECHQUEUE = new Array();
                 CLC_MACTTS_CheckingReadyStatus = false;
                 CLC_MACTTS_PROCESSINGQUEUE = false;
-                CLC_MacTTS_InitLocalTTSServer();
-                CLC_MacTTS_ServerReady();  //This call will fail if Mac TTS did not init properly
+                CLC_MACTTS_OBJ = new XMLHttpRequest();
+                CLC_MACTTS_CHECKER = new XMLHttpRequest();
+		CLC_MACTTS_OBJ.overrideMimeType('text/xml');
+                //Use the false flag since we do not do this asynchronously.
+                //The goal here is to test for the Mac TTS Server's existence... 
+                //There will be an exception thrown if it does not exist.
+		CLC_MACTTS_OBJ.open('POST', "http://127.0.0.1:" + CLC_MACTTS_PORT + "/", false);
+		CLC_MACTTS_OBJ.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		CLC_MACTTS_OBJ.send(null); 
 	} catch (err) {
         //Fail quietly to avoid a failure loop of error messages caused by trying to speak error alert boxes
 	//	alert(err);
@@ -338,11 +347,12 @@ function CLC_Say(messagestring, pitch) {
       CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
       }
    if (CLC_TTS_ENGINE == 5){
-      //Put in speech queue management for Mac   
-      CLC_MACTTS_SPEECHQUEUE.push(messagestring);
-      if (!CLC_MACTTS_PROCESSINGQUEUE){
-        CLC_MacTTS_ProcessSpeechQueue();
-        }
+      var speechProperties = new Array();
+      var pitchProperty = new Array();
+      pitchProperty.push(pitch);
+      pitchProperty.push(2);
+      speechProperties.push(pitchProperty);
+      CLC_SayWithProperties(messagestring, speechProperties, new Array());
       }
    }
 
@@ -542,8 +552,22 @@ function CLC_Spell(messagestring, pitch) {
       CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
       }
    if (CLC_TTS_ENGINE == 5){
-      messagestring = CLC_FREETTS_InsertSpaces(messagestring);      
-      CLC_Say(messagestring, pitch);     
+      var speechProperties = new Array();
+      var pitchProperty = new Array();
+      pitchProperty.push(pitch);
+      pitchProperty.push(2);
+      speechProperties.push(pitchProperty);
+      var dummyProperty = new Array();
+      dummyProperty.push(0);
+      dummyProperty.push(-1);
+      speechProperties.push(dummyProperty);
+      speechProperties.push(dummyProperty);
+      speechProperties.push(dummyProperty);
+      var spellProperty = new Array();
+      spellProperty.push(1);
+      spellProperty.push(0);
+      speechProperties.push(spellProperty);
+      CLC_SayWithProperties(messagestring, speechProperties, new Array());
       }
    }
 
@@ -606,8 +630,12 @@ function CLC_Shout(messagestring, pitch) {
       CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
       }
    if (CLC_TTS_ENGINE == 5){
-      CLC_MACTTS_SPEECHQUEUE = new Array();
-      CLC_MacTTS_SendToTTS(messagestring);
+      var speechProperties = new Array();
+      var pitchProperty = new Array();
+      pitchProperty.push(pitch);
+      pitchProperty.push(2);
+      speechProperties.push(pitchProperty);
+      CLC_ShoutWithProperties(messagestring, speechProperties, new Array());
       }
    }
 
@@ -674,8 +702,22 @@ function CLC_ShoutSpell(messagestring, pitch) {
       CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
       }
    if (CLC_TTS_ENGINE == 5){
-      messagestring = CLC_FREETTS_InsertSpaces(messagestring);
-      CLC_Shout(messagestring, pitch);   
+      var speechProperties = new Array();
+      var pitchProperty = new Array();
+      pitchProperty.push(pitch);
+      pitchProperty.push(2);
+      speechProperties.push(pitchProperty);
+      var dummyProperty = new Array();
+      dummyProperty.push(0);
+      dummyProperty.push(-1);
+      speechProperties.push(dummyProperty);
+      speechProperties.push(dummyProperty);
+      speechProperties.push(dummyProperty);
+      var spellProperty = new Array();
+      spellProperty.push(1);
+      spellProperty.push(0);
+      speechProperties.push(spellProperty);
+      CLC_ShoutWithProperties(messagestring, speechProperties, new Array());  
       }
    }
 
