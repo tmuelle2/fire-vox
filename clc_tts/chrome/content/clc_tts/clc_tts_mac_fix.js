@@ -105,7 +105,7 @@ function CLC_MacTTS_ServerReady(){
   CLC_MACTTS_CHECKER.open('GET', "http://127.0.0.1:" + CLC_MACTTS_PORT + "/", false);
   CLC_MACTTS_CHECKER.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   CLC_MACTTS_CHECKER.send("");
-  if (CLC_MACTTS_CHECKER.responseText && CLC_MACTTS_CHECKER.responseText.toLowerCase() == "false"){
+  if (CLC_MACTTS_CHECKER.responseText && CLC_MACTTS_CHECKER.responseText.toLowerCase() == "<false/>"){
     CLC_MACTTS_CheckingReadyStatus = false;
     return true;
     }
