@@ -53,6 +53,7 @@ var CLC_EMACSPEAK_URL = "http://127.0.0.1:2222";
 var CLC_EMACSPEAK_CheckingReadyStatus = false;
 
 var CLC_MACTTS_OBJ;
+var CLC_MACTTS_CHECKER;
 var CLC_MACTTS_PORT = "58384";
 var CLC_MACTTS_CheckingReadyStatus = false;
 var CLC_MACTTS_PROCESSINGQUEUE = false;
@@ -163,6 +164,7 @@ function CLC_Init(engine) {
                 CLC_MACTTS_CheckingReadyStatus = false;
                 CLC_MACTTS_PROCESSINGQUEUE = false;
                 CLC_MACTTS_OBJ = new XMLHttpRequest();
+                CLC_MACTTS_CHECKER = new XMLHttpRequest();
 		CLC_MACTTS_OBJ.overrideMimeType('text/xml');
                 //Use the false flag since we do not do this asynchronously.
                 //The goal here is to test for the Mac TTS Server's existence... 

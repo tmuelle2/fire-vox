@@ -100,12 +100,12 @@ function CLC_MacTTS_ServerReady(){
     return false;
     }
   CLC_MACTTS_CheckingReadyStatus = true;
-  CLC_MACTTS_OBJ.abort();
-  CLC_MACTTS_OBJ.overrideMimeType('text/xml');
-  CLC_MACTTS_OBJ.open('GET', "http://127.0.0.1:" + CLC_MACTTS_PORT + "/", false);
-  CLC_MACTTS_OBJ.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  CLC_MACTTS_OBJ.send("");
-  if (CLC_MACTTS_OBJ.responseText && CLC_MACTTS_OBJ.responseText.toLowerCase() == "false"){
+  CLC_MACTTS_CHECKER.abort();
+  CLC_MACTTS_CHECKER.overrideMimeType('text/xml');
+  CLC_MACTTS_CHECKER.open('GET', "http://127.0.0.1:" + CLC_MACTTS_PORT + "/", false);
+  CLC_MACTTS_CHECKER.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  CLC_MACTTS_CHECKER.send("");
+  if (CLC_MACTTS_CHECKER.responseText && CLC_MACTTS_CHECKER.responseText.toLowerCase() == "false"){
     CLC_MACTTS_CheckingReadyStatus = false;
     return true;
     }
