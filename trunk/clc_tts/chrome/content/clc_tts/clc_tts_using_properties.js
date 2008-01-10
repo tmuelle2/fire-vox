@@ -362,12 +362,20 @@ function CLC_GenerateMacTTSStringWithProperties(messagestring, speechProperties_
                }
             }
          //Apply the pitch
+         var undoPitch = pitch * -1;
          if (pitch < 0){
            MACTTS_STR = '[[pbas ' + pitch + ']]' + MACTTS_STR;
            }
          else {
            MACTTS_STR = '[[pbas +' + pitch + ']]' + MACTTS_STR;
            }
+         if (undoPitch < 0){
+           MACTTS_STR = MACTTS_STR + '[[pbas ' + undoPitch + ']]';
+           }
+         else {
+           MACTTS_STR = MACTTS_STR + '[[pbas +' + undoPitch + ']]';
+           }
+
          }
       }
 
@@ -395,11 +403,18 @@ function CLC_GenerateMacTTSStringWithProperties(messagestring, speechProperties_
                }
             }
          //Apply the rate
+         var undoRate = rate * -1;
          if (rate < 0){
            MACTTS_STR = '[[rate ' + rate + ']]' + MACTTS_STR;
            }
          else {
            MACTTS_STR = '[[rate +' + rate + ']]' + MACTTS_STR;
+           }
+         if (undoRate < 0){
+           MACTTS_STR = MACTTS_STR + '[[rate ' + undoRate + ']]';
+           }
+         else {
+           MACTTS_STR = MACTTS_STR + '[[rate +' + undoRate + ']]';
            }
          }
       }
@@ -428,7 +443,7 @@ function CLC_GenerateMacTTSStringWithProperties(messagestring, speechProperties_
                }
             }
          //Apply the volume
-         MACTTS_STR = '[[volm ' + volume + ']]' + MACTTS_STR;
+         MACTTS_STR = '[[volm ' + volume + ']]' + MACTTS_STR + '[[volm ' + CLC_MACTTS_DefaultVolume + ']]';
          }
       }
 
@@ -438,13 +453,11 @@ function CLC_GenerateMacTTSStringWithProperties(messagestring, speechProperties_
       if (speechProperties_array[4].length == 2){
          //Boolean mode and true
          if ( (speechProperties_array[4][1] == 0) && (speechProperties_array[4][0] == 1) ){
-            MACTTS_STR = "[[char LTRL]]" + MACTTS_STR;
+            MACTTS_STR = "[[char LTRL]]" + MACTTS_STR + "[[char NORM]]";
             }
          }
       }
 
-
-   MACTTS_STR = "[[rset 0]]" + MACTTS_STR; //Start from a clean slate when applying properties
    return MACTTS_STR;
    }
 
