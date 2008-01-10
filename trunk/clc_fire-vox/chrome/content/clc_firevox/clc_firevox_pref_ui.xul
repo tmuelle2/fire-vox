@@ -10,7 +10,10 @@
    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" >
 	 
    <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts.js" />
+   <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_emacspeak_fix.js" />
    <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_freetts_fix.js" />
+   <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_mac_fix.js" />
+   <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_orca_fix.js" />
    <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_sapi5_fix.js" />
    <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts_using_properties.js" />
    <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_globals.js" />

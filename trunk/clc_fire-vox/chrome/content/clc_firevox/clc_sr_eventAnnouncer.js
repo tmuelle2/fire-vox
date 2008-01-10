@@ -36,7 +36,7 @@ function CLC_SR_SpeakMenus_EventAnnouncer(event){
        CLC_SR_SpeakEventBuffer = CLC_SR_SpeakEventBuffer + CLC_SR_MSG0009;
        }  
    CLC_SR_Stop = true; 
-   window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,1);", 0);  
+   window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0);", 0);  
    }
 
 
@@ -84,7 +84,7 @@ function CLC_SR_SpeakFocus_EventAnnouncer(event){
       CLC_SR_SpeakEventBuffer = event.target.value;
       CLC_SR_SpeakEventBuffer = CLC_SR_MSG0010 + CLC_SR_SpeakEventBuffer;      
       CLC_SR_Stop = true; 
-      window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,1);", 0);
+      window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0);", 0);
       return;
       }      
    //Not sure about the rest - none for now
@@ -214,7 +214,7 @@ function CLC_SR_SpeakARIAWidgetEvents_EventAnnouncer(event){
         ((event.attrName == "checked") || (event.attrName == "valuenow") || (event.attrName == "activedescendant")) ){
       CLC_SR_SpeakEventBuffer = CLC_GetStatusFromRole(event.target);
       CLC_SR_Stop = true; 
-      window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,1);", 0);
+      window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0);", 0);
       }
 
    //Try to do something more elegant with tree items, but this works for now.
