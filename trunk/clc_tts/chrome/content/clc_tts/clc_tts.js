@@ -176,9 +176,27 @@ function CLC_Init(engine) {
 		CLC_MACTTS_OBJ.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		CLC_MACTTS_OBJ.send(null); 
 	} catch (err) {
-        //Fail quietly to avoid a failure loop of error messages caused by trying to speak error alert boxes
-	//	alert(err);
-		return false;
+          //Give it one more shot after waiting a bit, it might just be slow
+          try {
+                var thread = Components.classes["@mozilla.org/thread;1"].createInstance(Components.interfaces.nsIThread);
+                thread.currentThread.sleep(3000);
+                CLC_MacTTS_InitLocalTTSServer();
+                CLC_MACTTS_SPEECHQUEUE = new Array();
+                CLC_MACTTS_CheckingReadyStatus = false;
+                CLC_MACTTS_PROCESSINGQUEUE = false;
+                CLC_MACTTS_OBJ = new XMLHttpRequest();
+                CLC_MACTTS_CHECKER = new XMLHttpRequest();
+		CLC_MACTTS_OBJ.overrideMimeType('text/xml');
+                //Use the false flag since we do not do this asynchronously.
+                //The goal here is to test for the Mac TTS Server's existence... 
+                //There will be an exception thrown if it does not exist.
+		CLC_MACTTS_OBJ.open('POST', "http://127.0.0.1:" + CLC_MACTTS_PORT + "/", false);
+		CLC_MACTTS_OBJ.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		CLC_MACTTS_OBJ.send(null); 
+          } catch (errAgain) {
+            //Really failed
+            return false;
+          }
 	}    
         CLC_Make_TTS_History_Buffer(20);
         CLC_TTS_ENGINE = 5;
@@ -735,3 +753,30 @@ function CLC_SetLanguage(theLanguage) {
    }
 
 //------------------------------------------
+//Sets the default pitch using the pitchValue and pitchMode.
+//Currently, only mode 2 (enum) is supported.
+//
+function CLC_SetPitch(pitchValue, pitchMode) {
+   if (pitchMode == 2){
+     CLC_SAPI5_DefaultMiddle = pitchValue * 5;
+     CLC_FreeTTS_DefaultMiddle = (pitchValue * 30) + 100;
+     CLC_MACTTS_DefaultMiddle = pitchValue * 5;
+     }
+   }
+
+//------------------------------------------
+//Sets the default rate using the rateValue and rateMode.
+//Currently, only mode 2 (enum) is supported.
+//
+function CLC_SetRate(rateValue, rateMode) {
+   if (rateMode == 2){
+     CLC_SAPI5_DefaultRate = rateValue * 5;
+     CLC_FreeTTS_DefaultRate = (37.5 * rateValue) + 150;
+     CLC_MACTTS_DefaultRate = rateValue * 75;
+     }
+   }
+
+
+
+
+
