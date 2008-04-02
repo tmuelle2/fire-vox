@@ -36,7 +36,7 @@ function CLC_SR_SpeakMenus_EventAnnouncer(event){
        CLC_SR_SpeakEventBuffer = CLC_SR_SpeakEventBuffer + CLC_SR_MSG0009;
        }  
    CLC_SR_Stop = true; 
-   window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0);", 0);  
+   window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,1);", 0);  
    }
 
 
@@ -84,7 +84,7 @@ function CLC_SR_SpeakFocus_EventAnnouncer(event){
       CLC_SR_SpeakEventBuffer = event.target.value;
       CLC_SR_SpeakEventBuffer = CLC_SR_MSG0010 + CLC_SR_SpeakEventBuffer;      
       CLC_SR_Stop = true; 
-      window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0);", 0);
+      window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,1);", 0);
       return;
       }      
    //Not sure about the rest - none for now
@@ -99,6 +99,11 @@ function CLC_SR_SpeakHTMLFocusEvents_Init(){
    for(i =0; i < framesArray.length; i++){
       framesArray[i].contentWindow.document.body.addEventListener("focus", CLC_SR_SpeakHTMLFocus_EventAnnouncer, true);
       framesArray[i].contentWindow.document.body.addEventListener("DOMAttrModified", CLC_SR_BodyActiveDescendant_Announcer, false);
+      }
+   var iframesArray = window._content.document.documentElement.getElementsByTagName("iframe"); 
+   for(i =0; i < iframesArray.length; i++){
+      iframesArray[i].contentWindow.document.body.addEventListener("focus", CLC_SR_SpeakHTMLFocus_EventAnnouncer, true);
+      iframesArray[i].contentWindow.document.body.addEventListener("DOMAttrModified", CLC_SR_BodyActiveDescendant_Announcer, false);
       }
    CLC_Window().document.body.addEventListener("focus", CLC_SR_SpeakHTMLFocus_EventAnnouncer, true);
    CLC_Window().document.body.addEventListener("DOMAttrModified", CLC_SR_BodyActiveDescendant_Announcer, false);
@@ -214,7 +219,7 @@ function CLC_SR_SpeakARIAWidgetEvents_EventAnnouncer(event){
         ((event.attrName == "checked") || (event.attrName == "valuenow") || (event.attrName == "activedescendant")) ){
       CLC_SR_SpeakEventBuffer = CLC_GetStatusFromRole(event.target);
       CLC_SR_Stop = true; 
-      window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0);", 0);
+      window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,1);", 0);
       }
 
    //Try to do something more elegant with tree items, but this works for now.
