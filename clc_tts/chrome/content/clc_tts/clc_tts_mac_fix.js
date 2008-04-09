@@ -20,7 +20,7 @@
 //Suite 330, Boston, MA 02111-1307, USA.
  
 
-//Last Modified Date 1/7/2008
+//Last Modified Date 4/2/2008
 
 
 //------------------------------------------
@@ -37,41 +37,21 @@ function CLC_MacTTS_SanitizeInput(targetStr){
 //
 //
 function CLC_MacTTS_InitLocalTTSServer(){
+  //Don't bother initializing if the TTS is already up
   try {
     CLC_MacTTS_ServerReady();
     return; //Return if Mac TTS already running
     }
   catch (err) { } //Will receive an error if it is not running yet
 
-  //Find the TTS executable
-  const id = "{7529D455-3392-4a17-A489-0C737D1DBAC0}";
-  var extensionPath = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager).getInstallLocation(id).getItemLocation(id).path;
-  var macTTSFile = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
-  macTTSFile.initWithPath(extensionPath);
-  macTTSFile.append("components");
-  macTTSFile.append("MacTTS");
-  macTTSFile.append("Contents");
-  macTTSFile.append("MacOS");
-  macTTSFile.append("tts");
+  //Use the Leopard TTS server if at all possible
+  CLC_MacTTS_InitLeopardTTS();
 
-  //Make sure the TTS is executable
-  CLC_MacTTS_MakeExecutable(macTTSFile.path);
-
-  // create an nsIProcess
-  var process = Components.classes["@mozilla.org/process/util;1"].createInstance(Components.interfaces.nsIProcess);
-  process.init(macTTSFile);
-
-  // Run the process.
-  // If first param is true, calling thread will be blocked until
-  // called process terminates.
-  // Second and third params are used to pass command-line arguments
-  // to the process.
-  var args = [CLC_MACTTS_PORT];
-  process.run(false, args, args.length);
-
-  //Sleep for one second 
-  var thread = Components.classes["@mozilla.org/thread;1"].createInstance(Components.interfaces.nsIThread);
-  thread.currentThread.sleep(1000);
+  //The older, pre-Leopard TTS is KNOWN to have a chipmunking problem.
+  //To use it instead of the Leopard TTS, comment out the line:
+  // "CLC_MacTTS_InitLeopardTTS();"
+  //and uncomment the line below, then rebuild the CLC TTS core:
+  //CLC_MacTTS_InitOldTTS();
   }
 
 //------------------------------------------
@@ -137,6 +117,96 @@ function CLC_MacTTS_ServerReady(){
   return false;
   }
 
+//------------------------------------------
+// Use the Leopard TTS server if possible as  
+// this does not have the "chipmunking" problem.
+//
+function CLC_MacTTS_InitLeopardTTS(){
+  //Find the TTS executable
+  const id = "{7529D455-3392-4a17-A489-0C737D1DBAC0}";
+  var extensionPath = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager).getInstallLocation(id).getItemLocation(id).path;
+  var macTTSFile = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
+  macTTSFile.initWithPath(extensionPath);
+  macTTSFile.append("components");
+  macTTSFile.append("MacTTS_Leopard");
+  macTTSFile.append("Contents");
+  macTTSFile.append("MacOS");
+  macTTSFile.append("tts");
+
+  //Make sure the TTS is executable
+  CLC_MacTTS_MakeExecutable(macTTSFile.path);
+
+  // create an nsIProcess
+  var process = Components.classes["@mozilla.org/process/util;1"].createInstance(Components.interfaces.nsIProcess);
+  process.init(macTTSFile);
+
+  // Run the process.
+  // If first param is true, calling thread will be blocked until
+  // called process terminates.
+  // Second and third params are used to pass command-line arguments
+  // to the process.
+  var args = [CLC_MACTTS_PORT];
+  process.run(false, args, args.length);
+
+  //Sleep for one second 
+  var thread = Components.classes["@mozilla.org/thread;1"].createInstance(Components.interfaces.nsIThread);
+  thread.currentThread.sleep(1000);
+  }
+
+//------------------------------------------
+// Fall back to the older, non-Leopard TTS server.
+// This is recommended only as a last result as there
+// is a known "chipmunking" problem when this server
+// is used. Chipmunking is when the TTS starts raising
+// its pitch until it reaches the maximum and sounds
+// like a chipmunk talking. The problem is caused by
+// an inability to bring the pitch level back down
+// once it has gone up. 
+//
+// Pre-Leopard Mac OSX did not have the necessary 
+// properties in the NSSpeechSynthesizer API to 
+// reset the speech properties properly.
+//
+// This problem can be worked around by using "Brief Mode"
+// in Fire Vox. However, it cannot be cleanly solved.
+//
+// To fix a chipmunked Mac, the user needs to choose a 
+// new voice in the Mac system settings for speech,
+// then switch back to the voice they want. This will
+// reset the chipmunked voice, but it can still chipmunk
+// again later on.
+//
+function CLC_MacTTS_InitOldTTS(){
+  //Find the TTS executable
+  const id = "{7529D455-3392-4a17-A489-0C737D1DBAC0}";
+  var extensionPath = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager).getInstallLocation(id).getItemLocation(id).path;
+  var macTTSFile = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
+  macTTSFile.initWithPath(extensionPath);
+  macTTSFile.append("components");
+  macTTSFile.append("MacTTS_Old");
+  macTTSFile.append("Contents");
+  macTTSFile.append("MacOS");
+  macTTSFile.append("old_tts");
+
+  //Make sure the TTS is executable
+  CLC_MacTTS_MakeExecutable(macTTSFile.path);
+
+  // create an nsIProcess
+  var process = Components.classes["@mozilla.org/process/util;1"].createInstance(Components.interfaces.nsIProcess);
+  process.init(macTTSFile);
+
+  // Run the process.
+  // If first param is true, calling thread will be blocked until
+  // called process terminates.
+  // Second and third params are used to pass command-line arguments
+  // to the process.
+  var args = [CLC_MACTTS_PORT];
+  process.run(false, args, args.length);
+
+  //Sleep for one second 
+  var thread = Components.classes["@mozilla.org/thread;1"].createInstance(Components.interfaces.nsIThread);
+  thread.currentThread.sleep(1000);
+  }
 
 
 
