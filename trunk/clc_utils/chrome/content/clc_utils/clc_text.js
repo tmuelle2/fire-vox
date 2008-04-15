@@ -242,7 +242,9 @@ function CLC_RemoveLeadingSpaces(target){
 //Returns true if target is a lowercase character; else false.
 //
 function CLC_IsLower(target){
-   if (target == '+' ||target == '\\' || target == '*' || target == '['){
+   if ( target == '+' || target == '\\' || 
+        target == '*' || target == '[' || 
+        target == '(' ){
       return false;
       }
    var upperletters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
