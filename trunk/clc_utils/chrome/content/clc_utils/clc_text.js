@@ -181,7 +181,9 @@ function CLC_GetTextAfterMarker(textstring, marker){
 //Returns true if target is an uppercase character; else false.
 //
 function CLC_IsUpper(target){
-   if (target == '+' ||target == '\\' || target == '*' || target == '['){
+   if ( target == '+' || target == '\\' || 
+        target == '*' || target == '[' || 
+        target == '(' ){
       return false;
       }
    var upperletters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
