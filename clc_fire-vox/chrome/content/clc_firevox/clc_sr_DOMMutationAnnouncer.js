@@ -27,6 +27,17 @@ function CLC_SR_DOMMutationProcessor_Init(){
    optionsArray.push(1);
    optionsArray.push(1);
    CLC_InitMutationEventsSystem(window._content.document,optionsArray);
+
+   //Also watch for mutations from iframes
+   var framesArray = window._content.document.documentElement.getElementsByTagName("frame"); 
+   for(i =0; i < framesArray.length; i++){
+      CLC_InitMutationEventsSystem(framesArray[i].contentWindow.document,optionsArray);
+      }
+   var iframesArray = window._content.document.documentElement.getElementsByTagName("iframe"); 
+   for(i =0; i < iframesArray.length; i++){
+      CLC_InitMutationEventsSystem(iframesArray[i].contentWindow.document,optionsArray);
+      }
+
    CLC_SR_ProcessMutationEvents();
    }
 
