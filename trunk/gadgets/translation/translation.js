@@ -16,7 +16,8 @@ var tenthsPassed = 0;
 
 function displayTranslation(result){
   var tlNode = _gel('translation');
-  tlNode.innerHTML = result.translation;
+  tlNode.setAttribute('aria-live','rude');
+  tlNode.innerHTML = '<div lang="' + destLang + '">' + result.translation + '</div>';
 };
 
 
