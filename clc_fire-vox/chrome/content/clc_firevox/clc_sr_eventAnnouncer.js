@@ -98,27 +98,26 @@ function CLC_SR_SpeakHTMLFocusEvents_Init(){
    var framesArray = window._content.document.documentElement.getElementsByTagName("frame"); 
    for(i =0; i < framesArray.length; i++){
       framesArray[i].contentWindow.document.body.addEventListener("focus", CLC_SR_SpeakHTMLFocus_EventAnnouncer, true);
-      framesArray[i].contentWindow.document.body.addEventListener("DOMAttrModified", CLC_SR_BodyActiveDescendant_Announcer, false);
+      framesArray[i].contentWindow.document.body.addEventListener("DOMAttrModified", CLC_SR_ActiveDescendant_Announcer, false);
       }
    var iframesArray = window._content.document.documentElement.getElementsByTagName("iframe"); 
    for(i =0; i < iframesArray.length; i++){
       iframesArray[i].contentWindow.document.body.addEventListener("focus", CLC_SR_SpeakHTMLFocus_EventAnnouncer, true);
-      iframesArray[i].contentWindow.document.body.addEventListener("DOMAttrModified", CLC_SR_BodyActiveDescendant_Announcer, false);
+      iframesArray[i].contentWindow.document.body.addEventListener("DOMAttrModified", CLC_SR_ActiveDescendant_Announcer, false);
       }
    CLC_Window().document.body.addEventListener("focus", CLC_SR_SpeakHTMLFocus_EventAnnouncer, true);
-   CLC_Window().document.body.addEventListener("DOMAttrModified", CLC_SR_BodyActiveDescendant_Announcer, false);
+   CLC_Window().document.body.addEventListener("DOMAttrModified", CLC_SR_ActiveDescendant_Announcer, false);
    }
 
 //------------------------------------------
-//If a web page is using active descendant on the body, 
+//If a web page is using active descendant, 
 //then that should be treated as the focused item and spoken.
 //
-function CLC_SR_BodyActiveDescendant_Announcer(event){
+function CLC_SR_ActiveDescendant_Announcer(event){
    if (!CLC_SR_Query_SpeakEvents()){
       return;
       }
-   if ( CLC_SR_ActOnFocusedElements && (event.target.tagName.toLowerCase() == "body") 
-        && (event.attrName == "aria-activedescendant") && (event.newValue) ){
+   if ( CLC_SR_ActOnFocusedElements && (event.attrName == "aria-activedescendant") && event.newValue){
       var targetNode = CLC_Window().document.getElementById(event.newValue);
       //This should not be necessary, but sometimes Firefox is slow in updating its internal
       //state of IDs, causing getElementById to fail on something where the ID was added 
@@ -126,7 +125,7 @@ function CLC_SR_BodyActiveDescendant_Announcer(event){
       //Get around this by retrying the operation 1/10 of a second later.
       if (!targetNode){
          CLC_SR_FailedActiveDescendantId = event.newValue;
-         window.setTimeout("CLC_SR_RetryBodyActiveDescendant_Announcer();", 100);
+         window.setTimeout("CLC_SR_RetryActiveDescendant_Announcer();", 100);
          return;
          }
       CLC_SR_SpeakEventBuffer = CLC_GetTextContentOfAllChildren(targetNode); 
@@ -141,7 +140,7 @@ function CLC_SR_BodyActiveDescendant_Announcer(event){
 //not show up and getElementById will return NULL. If this happens, then the operation
 //should be retried later.
 //
-function CLC_SR_RetryBodyActiveDescendant_Announcer(){
+function CLC_SR_RetryActiveDescendant_Announcer(){
    var targetNode = CLC_Window().document.getElementById(CLC_SR_FailedActiveDescendantId);
    CLC_SR_SpeakEventBuffer = CLC_GetTextContentOfAllChildren(targetNode); 
    window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0);", 10);
