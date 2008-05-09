@@ -129,7 +129,16 @@ function CLC_SR_ActiveDescendant_Announcer(event){
          return;
          }
       CLC_SR_SpeakEventBuffer = CLC_GetTextContentOfAllChildren(targetNode); 
-      window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0);", 10);
+      window.setTimeout( function(){
+          if (CLC_SR_Query_AutodetectLang()){
+            var currentObjLang = CLC_Content_FindLanguage(targetNode);
+            CLC_SetLanguage(currentObjLang);
+            }
+          CLC_Shout(CLC_SR_SpeakEventBuffer,0);
+          if (CLC_SR_Query_AutodetectLang()){
+            CLC_SetLanguage(CLC_SR_DefaultLanguage);
+            }
+          } , 10);
       }
    }
 
@@ -143,7 +152,16 @@ function CLC_SR_ActiveDescendant_Announcer(event){
 function CLC_SR_RetryActiveDescendant_Announcer(){
    var targetNode = CLC_Window().document.getElementById(CLC_SR_FailedActiveDescendantId);
    CLC_SR_SpeakEventBuffer = CLC_GetTextContentOfAllChildren(targetNode); 
-   window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0);", 10);
+   window.setTimeout( function(){
+       if (CLC_SR_Query_AutodetectLang()){
+         var currentObjLang = CLC_Content_FindLanguage(targetNode);
+         CLC_SetLanguage(currentObjLang);
+         }
+       CLC_Shout(CLC_SR_SpeakEventBuffer,0);
+       if (CLC_SR_Query_AutodetectLang()){
+         CLC_SetLanguage(CLC_SR_DefaultLanguage);
+         }
+       } , 10);
    }
 
 
