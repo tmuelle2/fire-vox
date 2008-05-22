@@ -155,7 +155,7 @@ function CLC_GetColHeading(target){
      var headingText = "";
      for (var i=0; i<headersIDArray.length; i++){
         var theHeader = CLC_Window().document.getElementById(headersIDArray[i]);
-        if (theHeader && !CLC_AcontainsB(theRow, theHeader)){
+        if (theHeader && !CLC_AcontainsB(theRow, theHeader) && (theHeader.scope != 'row')){
            headingText = headingText + CLC_GetTextContent(theHeader);
            }
         }
@@ -173,6 +173,9 @@ function CLC_GetColHeading(target){
   var theThead = tempnode.getElementsByTagName("thead")[0];
   if (theThead){
      if (theThead.getElementsByTagName("th").length > row_index){
+        if (theThead.getElementsByTagName("th")[row_index].scope == 'row'){
+          return "";
+          }
         return CLC_GetTextContent(theThead.getElementsByTagName("th")[row_index]);
         }
      if (theThead.getElementsByTagName("td").length > row_index){
@@ -198,6 +201,9 @@ function CLC_GetColHeading(target){
       return "";
       }
    if (CLC_AcontainsB(rows[0].cells[row_index], target)){
+     return "";
+     }
+   if (rows[0].cells[row_index].scope == 'row'){
      return "";
      }
    return CLC_GetTextContent(rows[0].cells[row_index]);
@@ -234,6 +240,9 @@ function CLC_GuessColHeading(target){
    if (!rows[0].cells[row_index]){
      return "";
      }   
+   if (rows[0].cells[row_index].scope == 'row'){
+     return "";
+     }   
    return rows[0].cells[row_index].textContent;
    }
 
@@ -260,7 +269,7 @@ function CLC_GetRowHeading(target){
      var headingText = "";
      for (var i=0; i<headersIDArray.length; i++){
         var theHeader = CLC_Window().document.getElementById(headersIDArray[i]);
-        if (theHeader && CLC_AcontainsB(theRow, theHeader)){
+        if (theHeader && CLC_AcontainsB(theRow, theHeader) && (theHeader.scope != 'col')){
            headingText = headingText + CLC_GetTextContent(theHeader);
            }
         }
@@ -281,6 +290,9 @@ function CLC_GetRowHeading(target){
      return "";
      }
    if (CLC_AcontainsB(rowheader[0], target)){
+     return "";
+     }
+   if (rowheader[0].scope == 'col'){
      return "";
      }
    return rowheader[0].textContent;
@@ -319,6 +331,9 @@ function CLC_GuessRowHeading(target){
   if (cells.length < 1){
      return "";
      }
+  if (cells[0].scope == 'col'){
+     return "";
+     }   
    return cells[0].textContent;
    }
 
