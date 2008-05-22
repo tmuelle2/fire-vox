@@ -103,6 +103,17 @@ function CLC_SR_ShouldEchoKeys(event){
       return true;
       }
    if (event.target.localName && event.target.localName.toLowerCase()=="textarea"){
+      if (CLC_SR_SpeakKeyEventBuffer == ' '){
+        var start = event.target.value.lastIndexOf(' ');
+        if (start == -1){
+          start = 0;
+          }
+        var word = event.target.value.substring(start);
+        if (word.length > 1){
+          CLC_SR_SpeakKeyEventBuffer = event.target.value.substring(start);    
+          CLC_SR_SpellTheEvent = false;          
+          }
+        }
       return true;
       }
 
