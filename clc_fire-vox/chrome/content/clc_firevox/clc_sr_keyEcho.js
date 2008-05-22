@@ -82,6 +82,19 @@ function CLC_SR_ShouldEchoKeys(event){
       if (event.target.type && event.target.type.toLowerCase() == "password"){
          CLC_SR_SpeakKeyEventBuffer = '*';
          }
+      else if (event.target.type && event.target.type.toLowerCase() == "text"){
+        if (CLC_SR_SpeakKeyEventBuffer == ' '){
+          var start = event.target.value.lastIndexOf(' ');
+          if (start == -1){
+            start = 0;
+            }
+          var word = event.target.value.substring(start);
+          if (word.length > 1){
+            CLC_SR_SpeakKeyEventBuffer = event.target.value.substring(start);    
+            CLC_SR_SpellTheEvent = false;          
+            }
+          }
+        }
       return true;
       }
    if (event.target.localName && event.target.localName.toLowerCase()=="select"){
