@@ -29,7 +29,7 @@ function getCurrentVideoId(){
 }
 
 function doSearch() {
-  var query = _gel('ytSearch').value;
+  var query = escape(_gel('ytSearch').value);
   var category = _gel('catSelect').value;
   var url = 'http://gdata.youtube.com/feeds/api/';
   if (category === ''){
