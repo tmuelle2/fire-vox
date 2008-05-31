@@ -4,7 +4,8 @@ var index = 0;
 
 
 
-var resControlStr = 'Press Enter to watch the current result. N for the next result. P for the previous result.';
+var resControlStr = 'Press Enter to watch the current result. N for the next result. P for the previous result. R for related videos. S to conduct a new search.';
+var vidControlStr = 'Press space to pause/resume the video. Comma to rewind. Period to fast forward. Equals to increase the volume. Minus to decrease the volume. N for the next video. P for the previous video. R for related videos. S to conduct a new search.';
 
 function getContent(urlStr){
   var url = urlStr;
@@ -185,6 +186,12 @@ function seekBackward(){
 
 
 function keyHandler(evt){
+  var currentAlt = _gel('controlPixel').alt;
+  _gel('controlPixel').alt = '';
+  _gel('controlPixel').blur();
+  _gel('controlPixel').focus();
+  _gel('controlPixel').alt = currentAlt;
+
   if (evt.keyCode == 13){ // Enter
     playCurrent();
     return false;
@@ -229,6 +236,11 @@ function keyHandler(evt){
     seekForward();
     return false;
   }
+  if (evt.charCode == 63){ // ?
+    _gel('controlPixel').blur();
+    _gel('controlPixel').focus();
+    return false;
+  }
   return true;
 };
 
@@ -247,6 +259,8 @@ function playCurrent(){
   var ytStr = 'http://www.youtube.com/v/' + videoId + '&enablejsapi=1&disablekb=1&autoplay=1&playerapiid=ytplayer';
 
   swfobject.embedSWF(ytStr, "playerArea", width, height, "8", null, null, params, atts);
+  
+  _gel('controlPixel').alt = vidControlStr;
 };
 
 
