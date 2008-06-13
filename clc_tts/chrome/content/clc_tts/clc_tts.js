@@ -1,3 +1,4 @@
+//Copyright (C) 2008 Google Inc.
 //CLC-4-TTS Firefox Extension:
 //Core Library Components for Text-To-Speech for Firefox
 //by Charles L. Chen
@@ -18,7 +19,7 @@
 //Suite 330, Boston, MA 02111-1307, USA.
  
 
-//Last Modified Date 10/06/2007
+//Last Modified Date 6/13/2008
 
 
 
@@ -61,6 +62,7 @@ var CLC_MACTTS_PORT = "58384";
 var CLC_MACTTS_CheckingReadyStatus = false;
 var CLC_MACTTS_PROCESSINGQUEUE = false;
 var CLC_MACTTS_SPEECHQUEUE;
+var CLC_MACTTS_USEOLDTTS = false; //Change this to true for pre-Leopard downgrade
 
 
 //------------------------------------------

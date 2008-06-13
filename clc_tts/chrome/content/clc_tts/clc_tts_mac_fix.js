@@ -20,7 +20,7 @@
 //Suite 330, Boston, MA 02111-1307, USA.
  
 
-//Last Modified Date 4/2/2008
+//Last Modified Date 6/13/2008
 
 
 //------------------------------------------
@@ -44,14 +44,12 @@ function CLC_MacTTS_InitLocalTTSServer(){
     }
   catch (err) { } //Will receive an error if it is not running yet
 
-  //Use the Leopard TTS server if at all possible
-  CLC_MacTTS_InitLeopardTTS();
-
-  //The older, pre-Leopard TTS is KNOWN to have a chipmunking problem.
-  //To use it instead of the Leopard TTS, comment out the line:
-  // "CLC_MacTTS_InitLeopardTTS();"
-  //and uncomment the line below, then rebuild the CLC TTS core:
-  //CLC_MacTTS_InitOldTTS();
+  if (CLC_MACTTS_USEOLDTTS){
+    CLC_MacTTS_InitOldTTS();
+    } else {
+    //Use the Leopard TTS server if at all possible
+    CLC_MacTTS_InitLeopardTTS();
+    }
   }
 
 //------------------------------------------

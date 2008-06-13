@@ -1,4 +1,4 @@
-//Copyright (C) 2005
+//Copyright (C) 2008 Google Inc.
 //CLC-4-TTS Firefox Extension:
 //Core Library Components for Text-To-Speech for Firefox
 //by Charles L. Chen
@@ -19,7 +19,7 @@
 //Suite 330, Boston, MA 02111-1307, USA.
  
 
-//Last Modified Date 12/22/2005
+//Last Modified Date 6/13/2008
 
 
 //For all the functions that use properties:
@@ -336,48 +336,42 @@ function CLC_MacTTS_PitchValueToLevel(pitch){
 function CLC_GenerateMacTTSStringWithProperties(messagestring, speechProperties_array, additionalProperties_array){
    var MACTTS_STR = CLC_MacTTS_SanitizeInput(messagestring);
 
+  if (CLC_MACTTS_USEOLDTTS){
+    return MACTTS_STR;
+    }
 
-   //Set pitch
-   if (speechProperties_array.length > 0){
-      //Make sure pitch property was valid
-      if (speechProperties_array[0].length == 2){
-         var pitch = 0;
-         //Undefined - Use default by doing nothing
-         if (speechProperties_array[0][1] == -1){   
-            pitch = CLC_MACTTS_DefaultMiddle;             
-            }
-         //Absolute 
-         if (speechProperties_array[0][1] == 0){ 
-            pitch = CLC_MacTTS_PitchValueToLevel(speechProperties_array[0][0]);      
-            }
-         //Percentage 
-         if (speechProperties_array[0][1] == 1){ 
-            pitch = (speechProperties_array[0][0] / 100) * (CLC_MACTTS_DefaultMiddle + 10) * 5; 
-            pitch = Math.round( (pitch / 5) - 10 );
-            }
-         //Enumeration
-         if (speechProperties_array[0][1] == 2){ 
-            if ((speechProperties_array[0][0] < 3) && (speechProperties_array[0][0] > -3)){
-               pitch = speechProperties_array[0][0] * 5; 
-               }
-            }
-         //Apply the pitch
-         var undoPitch = pitch * -1;
-         if (pitch < 0){
-           MACTTS_STR = '[[pbas ' + pitch + ']]' + MACTTS_STR;
-           }
-         else {
-           MACTTS_STR = '[[pbas +' + pitch + ']]' + MACTTS_STR;
-           }
-         if (undoPitch < 0){
-           MACTTS_STR = MACTTS_STR + '[[pbas ' + undoPitch + ']]';
-           }
-         else {
-           MACTTS_STR = MACTTS_STR + '[[pbas +' + undoPitch + ']]';
-           }
-
-         }
+  //Set pitch
+  if (speechProperties_array.length > 0){
+    //Make sure pitch property was valid
+    if (speechProperties_array[0].length == 2){
+      var pitch = 0;
+      //Undefined - Use default by doing nothing
+      if (speechProperties_array[0][1] == -1){   
+        pitch = CLC_MACTTS_DefaultMiddle;             
+        }
+      //Absolute 
+      if (speechProperties_array[0][1] == 0){ 
+        pitch = CLC_MacTTS_PitchValueToLevel(speechProperties_array[0][0]);      
+        }
+      //Percentage 
+      if (speechProperties_array[0][1] == 1){ 
+        pitch = (speechProperties_array[0][0] / 100) * (CLC_MACTTS_DefaultMiddle + 10) * 5; 
+        pitch = Math.round( (pitch / 5) - 10 );
+        }
+      //Enumeration
+      if (speechProperties_array[0][1] == 2){ 
+        if ((speechProperties_array[0][0] < 3) && (speechProperties_array[0][0] > -3)){
+          pitch = speechProperties_array[0][0] * 5; 
+          }
+        }
+      //Apply the pitch
+      if (pitch < 0){
+        MACTTS_STR = '[[pbas ' + pitch + ']]' + MACTTS_STR;
+        } else {
+        MACTTS_STR = '[[pbas +' + pitch + ']]' + MACTTS_STR;
+        }
       }
+    }
 
    //Ignore pitch range since SAPI 5 does not support this property
 
@@ -403,18 +397,11 @@ function CLC_GenerateMacTTSStringWithProperties(messagestring, speechProperties_
                }
             }
          //Apply the rate
-         var undoRate = rate * -1;
          if (rate < 0){
            MACTTS_STR = '[[rate ' + rate + ']]' + MACTTS_STR;
            }
          else {
            MACTTS_STR = '[[rate +' + rate + ']]' + MACTTS_STR;
-           }
-         if (undoRate < 0){
-           MACTTS_STR = MACTTS_STR + '[[rate ' + undoRate + ']]';
-           }
-         else {
-           MACTTS_STR = MACTTS_STR + '[[rate +' + undoRate + ']]';
            }
          }
       }
@@ -443,7 +430,7 @@ function CLC_GenerateMacTTSStringWithProperties(messagestring, speechProperties_
                }
             }
          //Apply the volume
-         MACTTS_STR = '[[volm ' + volume + ']]' + MACTTS_STR + '[[volm ' + CLC_MACTTS_DefaultVolume + ']]';
+         MACTTS_STR = '[[volm ' + volume + ']]' + MACTTS_STR;
          }
       }
 
