@@ -26,7 +26,7 @@
 //Suite 330, Boston, MA 02111-1307, USA.
  
 
-//Last Modified Date 1/10/2008
+//Last Modified Date 6/16/2008
 -->
 
 
@@ -36,7 +36,7 @@
 
 		<em:id>clc@clcworld.net</em:id>
 		<em:name>CLC-4-TTS Suite</em:name>
-		<em:version>3.7</em:version>
+		<em:version>3.8</em:version>
 		<em:description>CLC-4-TTS Suite Bundle Pack</em:description>
 		<em:creator>Charles L. Chen</em:creator>
 		<em:homepageURL>http://clcworld.net</em:homepageURL>
@@ -46,7 +46,7 @@
 			<Description>
 				<em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
 				<em:minVersion>1.5</em:minVersion>
-				<em:maxVersion>2.*</em:maxVersion>
+				<em:maxVersion>3.*</em:maxVersion>
 			</Description>
 		</em:targetApplication>
 

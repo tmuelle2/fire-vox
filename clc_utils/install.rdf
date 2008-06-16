@@ -26,7 +26,7 @@ xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 //Suite 330, Boston, MA 02111-1307, USA.
  
 
-//Last Modified Date 5/22/2008
+//Last Modified Date 6/12/2008
 -->
 
 
@@ -54,7 +54,7 @@ xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 			<Description>
 				<em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
 				<em:minVersion>1.5</em:minVersion>
-				<em:maxVersion>2.*</em:maxVersion>
+				<em:maxVersion>3.*</em:maxVersion>
 			</Description>
 		</em:targetApplication>
 		
