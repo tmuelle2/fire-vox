@@ -494,6 +494,7 @@ function CLC_SayWithProperties(messagestring, speechProperties_array, additional
 
    if (CLC_TTS_ENGINE == 4){
       //Emacspeak cannot do pitch, just ignore that for now
+      CLC_Emacspeak_CleanUp();
       CLC_Emacspeak_Prep();
       CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
       }

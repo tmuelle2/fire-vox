@@ -303,6 +303,7 @@ function CLC_Interrupt() {
       return;
       }
    if (CLC_TTS_ENGINE == 4){
+      CLC_Emacspeak_CleanUp();
       CLC_Emacspeak_Prep();
       CLC_EMACSPEAK_OBJ.send("stop"); 
       return;
@@ -363,6 +364,7 @@ function CLC_Say(messagestring, pitch) {
       }
    if (CLC_TTS_ENGINE == 4){
       //Emacspeak cannot do pitch, just ignore that for now
+      CLC_Emacspeak_CleanUp();
       CLC_Emacspeak_Prep();
       CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
       }
@@ -429,6 +431,7 @@ function CLC_Read(contentobject, contentstring, pitch) {
       }
    if (CLC_TTS_ENGINE == 4){
       //Emacspeak cannot do pitch, just ignore that for now
+      CLC_Emacspeak_CleanUp();
       CLC_Emacspeak_Prep();
       CLC_EMACSPEAK_OBJ.send("speak: " + contentstring);     
       }
@@ -568,6 +571,7 @@ function CLC_Spell(messagestring, pitch) {
    if (CLC_TTS_ENGINE == 4){
       //Emacspeak cannot do pitch, just ignore that for now
       messagestring = CLC_FREETTS_InsertSpaces(messagestring);
+      CLC_Emacspeak_CleanUp();
       CLC_Emacspeak_Prep();
       CLC_EMACSPEAK_OBJ.send("speak: " + messagestring);     
       }
