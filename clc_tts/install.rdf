@@ -32,7 +32,7 @@ xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 
 		<em:id>{7529D455-3392-4a17-A489-0C737D1DBAC0}</em:id>
 		<em:name>CLC-4-TTS</em:name>
-		<em:version>3.4</em:version>
+		<em:version>3.5</em:version>
 		<em:description>Core Library Components for Text-To-Speech</em:description>
 		<em:creator>Charles L. Chen</em:creator>
 		<em:homepageURL>http://clcworld.net</em:homepageURL>
