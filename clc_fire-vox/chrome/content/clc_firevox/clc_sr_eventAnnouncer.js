@@ -23,23 +23,28 @@
 //
 function CLC_SR_SpeakMenus_EventAnnouncer(event){
    if (!CLC_SR_Query_SpeakEvents()){
-      return;
-      }
-   CLC_SR_SpeakEventBuffer = event.target.accessible.name;
-   if (event.target.accessible.finalState && (event.target.accessible.finalState & event.target.accessible.STATE_HASPOPUP)){
-       CLC_SR_SpeakEventBuffer = CLC_SR_SpeakEventBuffer + CLC_SR_MSG0006;
-       }  
-   if (event.target.accessible.finalState && (event.target.accessible.finalState & event.target.accessible.STATE_UNAVAILABLE)){
-       CLC_SR_SpeakEventBuffer = CLC_SR_SpeakEventBuffer + CLC_SR_MSG0005;
-       }  
-   if (event.target.accessible.finalState && (event.target.accessible.finalState & event.target.accessible.STATE_CHECKED)){
+     return;
+     }
+ 
+   CLC_SR_SpeakEventBuffer = event.target.getAttribute('label');
+
+   if (event.target.getAttribute('type') == 'checkbox'){
+     if (event.target.getAttribute('checked') == 'true'){
        CLC_SR_SpeakEventBuffer = CLC_SR_SpeakEventBuffer + CLC_SR_MSG0009;
-       }  
+       } 
+     else { 
+       CLC_SR_SpeakEventBuffer = CLC_SR_SpeakEventBuffer + CLC_SR_MSG0017;
+       } 
+     }
+   if (event.target.getAttribute('disabled')){
+     CLC_SR_SpeakEventBuffer = CLC_SR_SpeakEventBuffer + CLC_SR_MSG0005;
+     } 
+   if (event.target.getElementsByTagName('menupopup').length > 0){
+     CLC_SR_SpeakEventBuffer = CLC_SR_SpeakEventBuffer + CLC_SR_MSG0006;
+     } 
    CLC_SR_Stop = true; 
    window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,1);", 0);  
    }
-
-
 
 //------------------------------------------
 //Sets the event listeners to catch events
