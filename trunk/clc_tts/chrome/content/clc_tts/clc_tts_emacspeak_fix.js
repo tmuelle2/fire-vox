@@ -26,7 +26,6 @@
 //Must prep the OrcaServer before anything can be done.
 //
 function CLC_Emacspeak_Prep(){
-   CLC_Emacspeak_CleanUp();
    CLC_EMACSPEAK_OBJ = new XMLHttpRequest();
    CLC_EMACSPEAK_OBJ.overrideMimeType('text/xml');
    CLC_EMACSPEAK_OBJ.open('POST', CLC_EMACSPEAK_URL, true);
