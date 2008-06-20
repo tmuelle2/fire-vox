@@ -25,6 +25,14 @@ function CLC_SR_SpeakMenus_EventAnnouncer(event){
    if (!CLC_SR_Query_SpeakEvents()){
      return;
      }
+   //Firefox started reporting the <OPTION> element as DOMMenuItemActive at some point;
+   //this breaks key echo as it creates another event and causes Fire Vox to say "null".
+   //For right now, the decision is that only browser chrome windows should be spoken
+   //should be spoken by this function. This decision may revisited later with speaking
+   //SELECT box handled here instead of by keyecho.
+   if (event.target.localName && event.target.localName.toLowerCase()=="option"){
+     return;
+     }
  
    CLC_SR_SpeakEventBuffer = event.target.getAttribute('label');
 
@@ -41,7 +49,7 @@ function CLC_SR_SpeakMenus_EventAnnouncer(event){
      } 
    if (event.target.getElementsByTagName('menupopup').length > 0){
      CLC_SR_SpeakEventBuffer = CLC_SR_SpeakEventBuffer + CLC_SR_MSG0006;
-     } 
+     }
    CLC_SR_Stop = true; 
    window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,1);", 0);  
    }
