@@ -6,6 +6,13 @@
 //processing tasks should be left to the functions in the other files.
 
 
+//-----------------------------------------------
+// Opens the Fire Vox Gadgets tab
+//
+function CLC_SR_OpenFireVoxGadgets(){
+   var gadgetTab = gBrowser.addTab('http://fire-vox.googlecode.com/svn/trunk/gadgets/gadgets.html');
+   gBrowser.selectedTab = gadgetTab;
+   }
 
 //-----------------------------------------------
 //Reads through the content in the direction
@@ -178,6 +185,7 @@ function CLC_SR_Init(){
       window.setTimeout("CLC_SR_DOMMutationProcessor_Init();", 5000); //Do not start monitoring mutation events 
                                                                       //until after a delay to prevent announcing ads 
                                                                       //being injected into the page when it first loads
+      window.BrowserOpenTab = CLC_SR_OpenFireVoxGadgets;
       }
    }
 
