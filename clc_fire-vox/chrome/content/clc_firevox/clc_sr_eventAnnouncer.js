@@ -207,7 +207,7 @@ function CLC_SR_SpeakHTMLFocus_EventAnnouncer(event){
             CLC_MoveCaret(CLC_SR_CurrentAtomicObject);
             if (CLC_SR_Query_UseBriefMode()){
                CLC_SR_SpeakEventBuffer = CLC_GetTextContentOfAllChildren(CLC_SR_CurrentAtomicObject); 
-               window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0);", 10);
+               window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0); CLC_Say(CLC_GetStatus(CLC_SR_CurrentAtomicObject), 0);", 10);
                }
             else {
                window.setTimeout("CLC_SR_ReadCurrentAtomicObject();", 0);
