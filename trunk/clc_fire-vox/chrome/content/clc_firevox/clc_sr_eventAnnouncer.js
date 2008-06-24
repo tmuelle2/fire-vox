@@ -61,7 +61,7 @@ function CLC_SR_SpeakEvents_Init(){
    //Speak menus
    window.addEventListener("DOMMenuItemActive", CLC_SR_SpeakMenus_EventAnnouncer, false);
    //Speak focused window items when appropriate (ie, URL bar)
-   window.addEventListener("focus", CLC_SR_SpeakFocus_EventAnnouncer, false);
+   window.addEventListener("focus", CLC_SR_SpeakFocus_EventAnnouncer, true);
    //Not sure about the rest - none for now
    }
 
@@ -90,7 +90,7 @@ function CLC_SR_SpeakEvents_Init(){
 
 function CLC_SR_SpeakFocus_EventAnnouncer(event){ 
    if (!CLC_SR_Query_SpeakEvents()){
-      return;
+      return true;
       }
    //Announce the URL bar when focused
    if (event.target.id=="urlbar"){
@@ -98,9 +98,10 @@ function CLC_SR_SpeakFocus_EventAnnouncer(event){
       CLC_SR_SpeakEventBuffer = CLC_SR_MSG0010 + CLC_SR_SpeakEventBuffer;      
       CLC_SR_Stop = true; 
       window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,1);", 0);
-      return;
+      return true;
       }      
    //Not sure about the rest - none for now
+   return true;
    }
 
 
