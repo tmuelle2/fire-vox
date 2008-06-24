@@ -44,7 +44,7 @@ function CLC_SR_SpeakPrefUI_TextboxFocus(textbox_id){
    if (!target){
       return;
       }
-   CLC_SR_SpeakEventBuffer = CLC_SR_MSG0016 + target.accessible.name + CLC_SR_MSG0015 + target.value;
+   CLC_SR_SpeakEventBuffer = CLC_SR_MSG0016 + target.label + CLC_SR_MSG0015 + target.value;
    window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,1);", 0);  
    }  
 
