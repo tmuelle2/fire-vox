@@ -207,20 +207,20 @@ function CLC_SR_SpeakHTMLFocus_EventAnnouncer(event){
       }
 
    if (CLC_SR_ActOnFocusedElements){
-      var temp;
       try{
-         temp = CLC_GetFirstAtomicObject(event.target);
-         if (temp){            
+         if (event.target) {            
             CLC_SR_PrevAtomicObject = CLC_SR_CurrentAtomicObject;
-            CLC_SR_CurrentAtomicObject = temp;
+            CLC_SR_CurrentAtomicObject = event.target;
             CLC_MoveCaret(CLC_SR_CurrentAtomicObject);
-            if (CLC_SR_Query_UseBriefMode()){
-               CLC_SR_SpeakEventBuffer = CLC_GetTextContentOfAllChildren(CLC_SR_CurrentAtomicObject); 
-               window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0); CLC_Say(CLC_GetStatus(CLC_SR_CurrentAtomicObject), 0);", 10);
-               }
-            else {
-               window.setTimeout("CLC_SR_ReadCurrentAtomicObject();", 0);
-               }
+            CLC_SR_SpeakEventBuffer = CLC_GetTextContentOfAllChildren(CLC_SR_CurrentAtomicObject); 
+            if (event.target.hasAttribute && event.target.hasAttribute('aria-activedescendant')){
+              var activeDescendantId = event.target.getAttribute('aria-activedescendant');
+              var activeDescendant = CLC_Window().document.getElementById(activeDescendantId);
+              if (activeDescendant){
+                CLC_SR_SpeakEventBuffer = CLC_GetTextContentOfAllChildren(activeDescendant); 
+                }
+              }
+            window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,0); CLC_Say(CLC_GetStatus(CLC_SR_CurrentAtomicObject), 0);", 10);
             }
          }
       catch(e){};
