@@ -122,6 +122,7 @@ function CLC_SR_SpeakHTMLFocusEvents_Init(){
    CLC_Window().document.body.addEventListener("DOMAttrModified", CLC_SR_ActiveDescendant_Announcer, false);
    }
 
+
 //------------------------------------------
 //If a web page is using active descendant, 
 //then that should be treated as the focused item and spoken.
@@ -141,8 +142,14 @@ function CLC_SR_ActiveDescendant_Announcer(event){
          window.setTimeout("CLC_SR_RetryActiveDescendant_Announcer();", 100);
          return;
          }
-      CLC_SR_SpeakEventBuffer = CLC_GetTextContentOfAllChildren(targetNode); 
-      window.setTimeout( function(){
+      try{
+        CLC_SR_SpeakEventBuffer = CLC_GetTextContentOfAllChildren(targetNode); 
+        } 
+      catch (e) {
+        CLC_SR_SpeakEventBuffer = CLC_GetTextContent(targetNode);
+        } 
+      finally {
+        window.setTimeout( function(){
           if (CLC_SR_Query_AutodetectLang()){
             var currentObjLang = CLC_Content_FindLanguage(targetNode);
             CLC_SetLanguage(currentObjLang);
@@ -152,6 +159,7 @@ function CLC_SR_ActiveDescendant_Announcer(event){
             CLC_SetLanguage(CLC_SR_DefaultLanguage);
             }
           } , 10);
+        }
       }
    }
 
