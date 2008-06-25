@@ -69,7 +69,7 @@ function displayEntry(){
   } else {
     title = entries[index].getElementsByTagName('title')[0].textContent;
     desc = entries[index].getElementsByTagName('content')[0].textContent;
-    dur = entries[index].getElementsByTagName('duration')[0].getAttribute('seconds') + ' seconds.';
+    dur = entries[index].getElementsByTagName('yt:duration')[0].getAttribute('seconds') + ' seconds.';
   }	
   var htmlStr = '<h2>' + title + '</h2><p>' + desc + '</p><p>' + dur + '</p>';
   _gel('content_div').innerHTML = htmlStr;
