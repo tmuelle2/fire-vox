@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>
+CLC Gadgets
+</title>
+
+<script>
+function go(){
+  var selectBox = document.getElementById('selectBox');
+  document.location = selectBox.options[selectBox.selectedIndex].value;
+}
+
+function keypress(evt){
+  if (evt.keyCode == 13){
+    go();
+    return false;
+  }
+  return true;
+};
+
+</script>
+
+</head>
+<body onload="document.getElementById('selectBox').focus();">
+<select id='selectBox' onkeypress='keypress(event);'>
+<option value=''>Please select the gadget you wish to use:</option>
+<option value='http://fire-vox.googlecode.com/svn/trunk/gadgets/youtube/clc_youtube.html'>YouTube</option>
+</select>
+<input type='button' value='Go' onclick='go();'/>
+</body>
+</html>
