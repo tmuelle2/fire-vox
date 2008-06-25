@@ -22,7 +22,7 @@ function getCurrentVideoId(){
   if (entries === null){
     return '';
   }
-  var playerNode = entries[index].getElementsByTagName('player')[0];
+  var playerNode = entries[index].getElementsByTagName('media:player')[0];
   var videoUrl = playerNode.getAttribute('url');
   var preamble = 'http://www.youtube.com/watch?v=';
   var videoId = videoUrl.substring(preamble.length);
