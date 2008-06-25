@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+<ModulePrefs title="YouTube"
+scrolling="true"
+height="200"
+width="320"
+description="YouTube search with full keyboard control. Powered by the YouTube API (http://code.google.com/apis/youtube/overview.html)"
+title_url="http://www.clcworld.net/"
+author="Charles L. Chen"
+author_email="clchen@google.com"/>
+
+<Content type="html">
+<![CDATA[
+
+<script type="text/javascript" src='http://displayawesome.com/resources/js/vertical.fill.js'></script>
+<script type="text/javascript" src='http://swfobject.googlecode.com/svn/trunk/swfobject/swfobject.js'></script>
+<img id='controlPixel'
+src='http://fire-vox.googlecode.com/svn/trunk/gadgets/youtube/clearpixel.gif'
+alt='' tabindex='0'>
+
+<div id="content_div" class='verticalFill'></div>
+
+
+<script type="text/javascript" src='http://fire-vox.googlecode.com/svn/trunk/gadgets/youtube/youtube.js'></script>
+
+]]>
+</Content>
+</Module>
