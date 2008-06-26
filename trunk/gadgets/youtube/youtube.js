@@ -71,7 +71,7 @@ function displayEntry(){
     desc = entries[index].getElementsByTagName('content')[0].textContent;
     dur = entries[index].getElementsByTagName('yt:duration')[0].getAttribute('seconds') + ' seconds.';
   }	
-  var htmlStr = '<h2>' + title + '</h2><p>' + desc + '</p><p>' + dur + '</p>';
+  var htmlStr = '<h2>' + title + '</h2><p>' + dur + '</p><p>' + desc + '</p>';
   _gel('content_div').innerHTML = htmlStr;
   _gel('controlPixel').blur();
   _gel('controlPixel').alt = title + '\n' + desc + '\n' + dur + '\n' + resControlStr;
