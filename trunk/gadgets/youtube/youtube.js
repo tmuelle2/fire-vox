@@ -74,7 +74,7 @@ function displayEntry(){
   var htmlStr = '<h2>' + title + '</h2><p>' + dur + '</p><p>' + desc + '</p>';
   _gel('content_div').innerHTML = htmlStr;
   _gel('controlPixel').blur();
-  _gel('controlPixel').alt = title + '\n' + desc + '\n' + dur + '\n' + resControlStr;
+  _gel('controlPixel').alt = title + '\n' + dur + '\n' + desc + '\n' + resControlStr;
   _gel('controlPixel').focus();
 };
 
