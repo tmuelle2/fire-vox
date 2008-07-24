@@ -6,7 +6,7 @@
    buttons=" "
    onload="CLC_SR_PrefUI_Load();"
    onunload="CLC_SR_PrefUI_Save();"
-   title="Fire Vox Preferences" width="400" height="500" persist="width, height"
+   title="Fire Vox Preferences" width="500" height="600" persist="width, height"
    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" >
 	 
    <script type="application/x-javascript" src="chrome://clc_tts/content/clc_tts.js" />
@@ -85,6 +85,15 @@
 
          </hbox>
 
+      </vbox>
+   </groupbox>
+
+   <groupbox>
+      <caption label="Keys"/>
+      <vbox style="min-width: 100px;" flex="1" align="start">
+        <label control="firevoxpref-CNRUrl-TextBox" value="Content Navigation Rules URL" />
+         <textbox id="firevoxpref-CNRUrl-TextBox" value="http://clcworld.blogspot.com/atom.xml" maxlength="80" 
+             onfocus="CLC_SR_SpeakPrefUI_TextboxFocus('firevoxpref-CNRUrl-TextBox')" />
       </vbox>
    </groupbox>
 
