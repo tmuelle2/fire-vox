@@ -321,6 +321,7 @@ function CLC_SR_Init_MainBrowser(){
    //Insert site specific scripts if appropriate
    if (CLC_SR_Query_UseSiteSpecificEnhancements()){
       CLC_SR_InsertSiteSpecificEnhancements(window._content.document);
+      CLC_SR_loadCNRSystem();
       }
 
    //Initialize the CSS Speech Property Rules

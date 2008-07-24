@@ -218,6 +218,18 @@ function CLC_SR_SetPref_UseBriefMode(bool_setting){
 
 
 //---------------------------------
+function CLC_SR_SetPref_CNRUrl(string_setting){
+   CLC_SR_Pref.setCharPref("firevox.CNRUrl", string_setting);	
+   }
+
+//---------------------------------
+function CLC_SR_Query_CNRUrl(){
+   if(CLC_SR_Pref.prefHasUserValue("firevox.CNRUrl")){
+      return CLC_SR_Pref.getCharPref("firevox.CNRUrl");
+      }
+   return "http://clcworld.blogspot.com/atom.xml";
+   }
+//---------------------------------
 
 
 //*****************************

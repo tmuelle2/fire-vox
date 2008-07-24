@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 
-<!-- Copyright (C) 2005
+<!-- Copyright 2008 Google Inc.
 //CLC-4-TTS Firefox Extension - Fire Vox
 //Based on Core Library Components for Text-To-Speech for Firefox
 //An extension that turns Firefox into a talking browser by using the CLC-4-TTS suite as its foundation.
@@ -23,7 +23,7 @@
 //Suite 330, Boston, MA 02111-1307, USA.
  
 
-//Last Modified Date 1/28/2005
+//Last Modified Date 7/24/2008
 -->
 
 <overlay id="clc_firevoxOverlay"
@@ -48,6 +48,7 @@
   <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_optionsDialog.js" />
   <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_DOMMutationAnnouncer.js" />
   <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_chatzillaFunctions.js" />
+  <script type="application/x-javascript" src="chrome://clc_firevox/content/clc_sr_cnrLoader.js" />
 
 
   <script type="application/x-javascript">
