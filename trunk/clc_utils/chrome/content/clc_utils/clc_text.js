@@ -116,6 +116,19 @@ function CLC_HasText(target){
    if (target.localName && (target.localName.toLowerCase() == "script") ) {
       return false;
       }
+  //Ignore visibility=hidden/display=none nodes
+  if (target.nodeType == 1){
+    var style = CLC_Window().getComputedStyle(target, '');
+    if ((style.display == 'none') || (style.visibility == 'hidden')){
+       return false;
+       }
+     }
+  if (target.parentNode && target.parentNode.nodeType == 1){
+    var style = CLC_Window().getComputedStyle(target.parentNode, '');
+    if ((style.display == 'none') || (style.visibility == 'hidden')){
+       return false;
+       }
+     }
    //Input roles are always considered to have text content
    if (CLC_RoleIsInput(target)) {
       return true;
