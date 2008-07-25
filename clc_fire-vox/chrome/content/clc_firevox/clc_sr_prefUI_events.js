@@ -81,3 +81,14 @@ function CLC_SR_SpeakPrefUI_ButtonFocus(button_id){
    window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,1);",0); 
    }  
 
+
+//------------------------------------------
+//Resets the CNR URL preference setting in the UI
+//
+function CLC_SR_ResetCNRUrl_ButtonCommand(){
+   var target = document.getElementById("firevoxpref-CNRUrl-TextBox");
+   target.value = "http://clcworld.blogspot.com/atom.xml";
+   CLC_SR_SpeakEventBuffer = "The content navigation rules U R L has been reset.";
+   window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,1);",0); 
+   }  
+

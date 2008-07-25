@@ -89,11 +89,14 @@
    </groupbox>
 
    <groupbox>
-      <caption label="Keys"/>
+      <caption label="Content Navigation Rules"/>
       <vbox style="min-width: 100px;" flex="1" align="start">
         <label control="firevoxpref-CNRUrl-TextBox" value="Content Navigation Rules URL" />
          <textbox id="firevoxpref-CNRUrl-TextBox" value="http://clcworld.blogspot.com/atom.xml" maxlength="80" 
              onfocus="CLC_SR_SpeakPrefUI_TextboxFocus('firevoxpref-CNRUrl-TextBox')" />
+         <button label="Reset to default Content Navigation Rules URL" id="firevoxpref-resetCNRUrl-button" 
+             oncommand="CLC_SR_ResetCNRUrl_ButtonCommand()"
+             onfocus="CLC_SR_SpeakPrefUI_ButtonFocus('firevoxpref-resetCNRUrl-button')" />
       </vbox>
    </groupbox>
 
