@@ -88,7 +88,7 @@ function CLC_SR_SpeakPrefUI_ButtonFocus(button_id){
 function CLC_SR_ResetCNRUrl_ButtonCommand(){
    var target = document.getElementById("firevoxpref-CNRUrl-TextBox");
    target.value = "http://clcworld.blogspot.com/atom.xml";
-   CLC_SR_SpeakEventBuffer = "The content navigation rules U R L has been reset.";
+   CLC_SR_SpeakEventBuffer = CLC_SR_MSG0040;
    window.setTimeout("CLC_Shout(CLC_SR_SpeakEventBuffer,1);",0); 
    }  
 

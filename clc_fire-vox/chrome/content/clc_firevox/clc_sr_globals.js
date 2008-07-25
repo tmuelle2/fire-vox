@@ -134,6 +134,9 @@ var CLC_SR_MSG0038 = "Sticky modifier keys off. ";   //Sticky mod keys
 var CLC_SR_MSG0039 = "Sticky modifier keys on. ";  
 
 
+var CLC_SR_MSG0040 = "The content navigation rules U R L has been reset.";  //For resetting the CNR URL
+
+
 
 
 

@@ -82,6 +82,23 @@ function CLC_SR_ShouldEchoKeys(event){
       if (event.target.type && event.target.type.toLowerCase() == "password"){
          CLC_SR_SpeakKeyEventBuffer = '*';
          }
+      else if ( (event.charCode == 32) && event.target.type && 
+                (event.target.type.toLowerCase() == "checkbox") ){
+         // Reverse this here because the checked status will not change until after the space key event
+         if (event.target.checked){
+           CLC_SR_SpeakKeyEventBuffer = CLC_SR_MSG0017;
+           }
+         else {
+           CLC_SR_SpeakKeyEventBuffer = CLC_SR_MSG0009;
+           }
+         CLC_SR_SpellTheEvent = false;
+         }
+      else if ( (event.charCode == 32) && event.target.type && 
+                (event.target.type.toLowerCase() == "radio") ){
+         // Radio buttons can never be unchecked by pressing space
+         CLC_SR_SpeakKeyEventBuffer = CLC_SR_MSG0009;
+         CLC_SR_SpellTheEvent = false;
+         }
       else if (event.target.type && event.target.type.toLowerCase() == "text"){
         if (CLC_SR_SpeakKeyEventBuffer == ' '){
           var start = event.target.value.lastIndexOf(' ');
