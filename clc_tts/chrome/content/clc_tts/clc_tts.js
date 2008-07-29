@@ -63,6 +63,7 @@ var CLC_MACTTS_CheckingReadyStatus = false;
 var CLC_MACTTS_PROCESSINGQUEUE = false;
 var CLC_MACTTS_SPEECHQUEUE;
 var CLC_MACTTS_USEOLDTTS = false; //Change this to true for pre-Leopard downgrade
+var CLC_MACTTS_FAILCOUNT = 0;
 
 
 //------------------------------------------
@@ -163,7 +164,7 @@ function CLC_Init(engine) {
         return true;
         }
    if (engine == 5){
-	try {
+          try {
                 CLC_MacTTS_InitLocalTTSServer();
                 CLC_MACTTS_SPEECHQUEUE = new Array();
                 CLC_MACTTS_CheckingReadyStatus = false;
@@ -177,30 +178,18 @@ function CLC_Init(engine) {
 		CLC_MACTTS_OBJ.open('POST', "http://127.0.0.1:" + CLC_MACTTS_PORT + "/", false);
 		CLC_MACTTS_OBJ.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		CLC_MACTTS_OBJ.send(null); 
-	} catch (err) {
+          } catch (err) {
           //Give it one more shot after waiting a bit, it might just be slow
           try {
-                var thread = Components.classes["@mozilla.org/thread;1"].createInstance(Components.interfaces.nsIThread);
-                thread.currentThread.sleep(3000);
-                CLC_MacTTS_InitLocalTTSServer();
-                CLC_MACTTS_SPEECHQUEUE = new Array();
-                CLC_MACTTS_CheckingReadyStatus = false;
-                CLC_MACTTS_PROCESSINGQUEUE = false;
-                CLC_MACTTS_OBJ = new XMLHttpRequest();
-                CLC_MACTTS_CHECKER = new XMLHttpRequest();
-		CLC_MACTTS_OBJ.overrideMimeType('text/xml');
-                //Use the false flag since we do not do this asynchronously.
-                //The goal here is to test for the Mac TTS Server's existence... 
-                //There will be an exception thrown if it does not exist.
-		CLC_MACTTS_OBJ.open('POST', "http://127.0.0.1:" + CLC_MACTTS_PORT + "/", false);
-		CLC_MACTTS_OBJ.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		CLC_MACTTS_OBJ.send(null); 
-          } catch (errAgain) {
-            //Really failed
-            return false;
-          }
-	}    
+            if (CLC_MACTTS_FAILCOUNT > 100){
+              return false;
+              }
+            CLC_MACTTS_FAILCOUNT++;
+            CLC_Init(engine);
+            } catch (errAgain) { }
+	  }
         CLC_Make_TTS_History_Buffer(20);
+        CLC_MACTTS_FAILCOUNT = 0;
         CLC_TTS_ENGINE = 5;
         return true;
         }
