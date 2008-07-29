@@ -27,32 +27,10 @@
 //
 //
 function CLC_MacTTS_SanitizeInput(targetStr){
-  targetStr = CLC_MacTTS_RemoveNonAscii(targetStr); //For now, strip non-Ascii for the Mac
-                                                    //to simplify the unescaping on the TTS 
-                                                    //server end as there is no non-English 
-                                                    //Mac TTS at the moment anyway.
   targetStr = targetStr.replace("#"," ");
   targetStr = targetStr.replace("["," ");
   targetStr = targetStr.replace("]"," ");
   return targetStr;
-  }
-
-//------------------------------------------
-//
-//
-function CLC_MacTTS_RemoveNonAscii(targetStr){
-  var asciiOnlyStr = '';
-  var alphanumPattern = /^\w{1}/;
-  var symbolPattern = /^[\~\!\@\$\%\^\&\*\(\)\_\+\`\-\=\{\}\|\\\:\"\;\'\<\>\?\,\.\/]/;
-  for (var i=0, c; c = targetStr[i]; i++){
-    if (!alphanumPattern.test(c) && !symbolPattern.test(c)){
-      asciiOnlyStr = asciiOnlyStr + ' ';
-      } 
-    else {
-      asciiOnlyStr = asciiOnlyStr + c;
-      }
-    }
-  return asciiOnlyStr;
   }
 
 //------------------------------------------
