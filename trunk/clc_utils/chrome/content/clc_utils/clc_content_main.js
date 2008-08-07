@@ -64,6 +64,9 @@ function CLC_GetTextContent(target){
   if (target.parentNode && target.parentNode.tagName && target.parentNode.tagName.toLowerCase() == "script"){
      return "";
      } 
+  if (target.parentNode && target.parentNode.tagName && target.parentNode.tagName.toLowerCase() == "noscript"){
+     return "";
+     } 
   //Do textarea twice because it may or may not have child nodes
   if (target.tagName && target.tagName.toLowerCase() == "textarea"){
      var labelText = CLC_Content_FindLabelText(target);
@@ -115,6 +118,10 @@ function CLC_GetTextContent(target){
      if ( (target.type.toLowerCase() == "submit") || (target.type.toLowerCase() == "reset")  || (target.type.toLowerCase() == "button")){
          var labelText = CLC_Content_FindLabelText(target);
          return labelText + " " + target.value;
+         }
+     if (target.type.toLowerCase() == "image"){
+         var labelText = CLC_Content_FindLabelText(target);
+         return labelText + " " + target.alt;
          }
       return "";
       }
