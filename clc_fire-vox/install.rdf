@@ -26,7 +26,7 @@ xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 //Suite 330, Boston, MA 02111-1307, USA.
  
 
-//Last Modified Date 6/20/2008
+//Last Modified Date 8/6/2008
 -->
 
 
@@ -34,7 +34,7 @@ xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 
 		<em:id>{054E9BDD-6287-44da-B3B3-B5D3D24407C0}</em:id>
 		<em:name>CLC-FireVox</em:name>
-		<em:version>6.0</em:version>
+		<em:version>6.1</em:version>
 		<em:description>Fire Vox: Talking browser extension built on the CLC-4-TTS suite</em:description>
 		<em:creator>Charles L. Chen</em:creator>
 		<em:homepageURL>http://clcworld.net</em:homepageURL>

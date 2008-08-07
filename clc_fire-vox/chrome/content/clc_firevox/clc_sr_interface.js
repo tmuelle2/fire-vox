@@ -182,9 +182,7 @@ function CLC_SR_Init(){
       CLC_SR_Hotkey_Init();
       CLC_SR_Mouseclick_Init();
       CLC_SR_Init_MainBrowser();
-      window.setTimeout("CLC_SR_DOMMutationProcessor_Init();", 5000); //Do not start monitoring mutation events 
-                                                                      //until after a delay to prevent announcing ads 
-                                                                      //being injected into the page when it first loads
+      CLC_SR_DOMMutationProcessor_Init();
       window.BrowserOpenTab = CLC_SR_OpenFireVoxGadgets;
       }
    }
