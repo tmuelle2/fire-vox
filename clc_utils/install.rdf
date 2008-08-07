@@ -26,7 +26,7 @@ xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 //Suite 330, Boston, MA 02111-1307, USA.
  
 
-//Last Modified Date 6/12/2008
+//Last Modified Date 8/6/2008
 -->
 
 
@@ -34,7 +34,7 @@ xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 
 		<em:id>{C12D2FDC-2ECA-42a5-BA3C-DB93E0E8B70A}</em:id>
 		<em:name>CLC-Utilities</em:name>
-		<em:version>4.4</em:version>
+		<em:version>4.5</em:version>
 		<em:description>Core Library Components for Text-To-Speech: Additional Utility Functions Library</em:description>
 		<em:creator>Charles L. Chen</em:creator>
 		<em:homepageURL>http://clcworld.net</em:homepageURL>
