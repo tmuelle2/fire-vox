@@ -137,6 +137,10 @@ function CLC_GetTextContent(target){
        if ( target.hasAttribute("alt") ){
          return target.alt;
          }
+       //Treat missing alt as null if the user is in Brief Mode
+       if (CLC_InfoLang == 3){
+         return "";
+         }
        return target.src;
        }
   //Select boxes - ignore their textContent, only read out the selected value.
