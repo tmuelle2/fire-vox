@@ -1,4 +1,4 @@
-var CVOX_BASEURL = ''
+var CVOX_BASEURL = 'http://fire-vox.googlecode.com/svn/trunk/clc_cvox/cvox/'
 
 function loadCVox(){
   //Load the debug TTS engine
