@@ -21,7 +21,7 @@ function debug(){
 // Run some test code here
 var myDebug = new CVoxDebug();
 var myTts = new CVoxTts(myDebug);
-myTts.speak("hello world", 0, null);
+myTts.speak(document.title, 0, null);
 alert(myDebug.getLog()[0]);
 }
 
