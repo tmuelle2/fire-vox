@@ -25,4 +25,4 @@ myTts.speak("hello world", 0, null);
 alert(myDebug.getLog()[0]);
 }
 
-window.setTimeout(debug, 100);
+window.onload = debug;
