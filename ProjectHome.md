@@ -1,0 +1,5 @@
+Fire Vox is an open source, freely available talking browser extension for the Firefox web browser. Think of it as a screen reader that is designed especially for Firefox. Fire Vox is especially useful for the visually impaired or for web developers who need to test their web pages for accessibility.
+
+Charles L. Chen first released Fire Vox in January of 2005. Now that he has been hired by Google, he is continuing to develop Fire Vox. The Fire Vox license remains unchanged - it is still GNU GPL 2 open source and will continue to remain freely available.
+
+This site is intended for those interested in trying out the latest builds or seeing what is going into Fire Vox as it happens. Official, stable releases designed for consumption by the general public will continue to be released on the official website at http://firevox.clcworld.net
